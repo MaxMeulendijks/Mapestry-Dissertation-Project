@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/AzureSpatialAnchors.Examples/Scenes/SignUpLogin.unity
+    guid: ada6044d590c9f04f9a303a9bb267324
+  - enabled: 1
     path: Assets/AzureSpatialAnchors.Examples/Scenes/AzureSpatialAnchorsDemoLauncher.unity
     guid: 4dcd43f53c599f94a80fb2408d9a15ff
   - enabled: 1
@@ -20,6 +23,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AzureSpatialAnchors.Examples/Scenes/AzureSpatialAnchorsCoarseRelocDemo.unity
     guid: 215a1784376860644a66e82f3d383b85
+  - enabled: 1
+    path: Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity
+    guid: 7cd7b90137d9bd44791365ea3549dcf1
+  - enabled: 1
+    path: Assets/AzureSpatialAnchors.Examples/Scenes/CreateAnchors.unity
+    guid: f83c3db2248c32d4fa65cec17c2ae6b2
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 87f66def52a300f47a1b37fc6c22a91f,
       type: 2}

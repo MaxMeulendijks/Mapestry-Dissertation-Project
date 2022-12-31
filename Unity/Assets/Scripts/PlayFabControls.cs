@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
@@ -19,10 +20,14 @@ public class PlayFabControls : MonoBehaviour
 {
 
     [SerializeField] GameObject signUpTab, loginTab, startUpScreen, HUD;
-    public TMP_Text username, userEmail, userEmailLogin, UserPasswordLogin, errorSignUp, errorLogin;
+    public TMP_Text username, userEmail, userEmailLogin, userPassword, userPasswordLogin, errorSignUp, errorLogin;
+    public static string usernameGame;
+    public static string playFabId;
+    public PlayerProfileModel playerProfile;
     string encryptedPassword;
 
     public void SignUpTab(){
+        usernameGame = "";
         signUpTab.SetActive(true);
         loginTab.SetActive(false);
         errorSignUp.text = "";
@@ -30,6 +35,7 @@ public class PlayFabControls : MonoBehaviour
     }
 
     public void LoginTab(){
+        usernameGame = "";
         signUpTab.SetActive(false);
         loginTab.SetActive(true);
         errorSignUp.text = "";
@@ -37,30 +43,49 @@ public class PlayFabControls : MonoBehaviour
     }
 
     string Encrypt(string pass) {
-        System.Security.Cryptography.MDSCryptoServiceProvider x = new System.Security.Cryptography.MDSCryptoServiceProvider();
-        byte[] bs = SystemException.TextEncoding.UTF8.GetBytes(pass);
-        bs = X.ComputeHash(bs);
+        System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider();
+        byte[] bs = System.Text.Encoding.UTF8.GetBytes(pass);
+        bs = x.ComputeHash(bs);
         System.Text.StringBuilder s = new System.Text.StringBuilder();
         foreach(byte b in bs) {
             s.Append(b.ToString("x2").ToLower());
         }
-        return s.ToString();
+
+        String sEncrypted = s.ToString();
+        removeSpace(sEncrypted);
+        return sEncrypted;
 
     }
 
+    string removeSpace(string text){
+
+        if (text != null){
+            text = text.Remove(text.Length - 1);
+        }
+
+        return text;
+    }
+
     public void SignUp(){
-        var registerRequest = new RegisterPlayFabUserRequest{Email = userEmail.text, Password = Encrypt(userPassword.text), Username = username.text};
+        var registerRequest = new RegisterPlayFabUserRequest{Email = removeSpace(userEmail.text), Password = Encrypt(userPassword.text), Username = removeSpace(username.text), DisplayName = removeSpace(username.text)};
         PlayFabClientAPI.RegisterPlayFabUser(registerRequest, RegisterSuccess, RegisterError);
     }
 
     public void LogIn(){
-        var loginRequest = new LoginWithEmailAddressRequest{Email = userEmailLogin.text, Password = Encrypt(userPasswordLogin.text)};
-        PlayFabClientAPI.LoginWthEmailAddress(loginRequest, LoginSuccess, LoginError);
+        GetPlayerCombinedInfoRequestParams getInfo = new GetPlayerCombinedInfoRequestParams {
+            GetUserAccountInfo = true
+            };
+        var loginRequest = new LoginWithEmailAddressRequest{Email = removeSpace(userEmailLogin.text), Password = Encrypt(userPasswordLogin.text), InfoRequestParameters = getInfo};
+        PlayFabClientAPI.LoginWithEmailAddress(loginRequest, LoginSuccess, LoginError);
     }
 
     public void RegisterSuccess(RegisterPlayFabUserResult result){
         errorSignUp.text = "";
         errorLogin.text = "";
+        
+        playFabId = result.PlayFabId;
+        usernameGame = result.Username;
+
         StartGame();
     }
 
@@ -69,9 +94,13 @@ public class PlayFabControls : MonoBehaviour
 
     }
 
-     public void LoginSuccess(LoginResult result){
+    public void LoginSuccess(LoginResult result){
         errorSignUp.text = "";
         errorLogin.text = "";
+        
+        playFabId = result.InfoResultPayload.AccountInfo.PlayFabId;
+        usernameGame = result.InfoResultPayload.AccountInfo.Username;
+
         StartGame();
     }
 
@@ -81,8 +110,7 @@ public class PlayFabControls : MonoBehaviour
     }
 
     void StartGame(){
-        startUpScreen.SetActive(false);
-        HUD.SetActive(true); 
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
