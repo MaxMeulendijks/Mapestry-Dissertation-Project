@@ -76,13 +76,15 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// </summary>
         public override void Start()
         {
-            feedbackBox = XRUXPicker.Instance.GetFeedbackText();
+            Debug.LogWarning("Before MobileUX");
+            feedbackBox = MobileUX.Instance.GetFeedbackText();
             if (feedbackBox == null)
             {
                 Debug.Log($"{nameof(feedbackBox)} not found in scene by XRUXPicker.");
                 Destroy(this);
                 return;
             }
+            Debug.LogWarning("After MobileUX");
 
             if (CloudManager == null)
             {
@@ -109,7 +111,9 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             CloudManager.LogDebug += CloudManager_LogDebug;
             CloudManager.Error += CloudManager_Error;
 
+            Debug.LogWarning("Is it breaking here already?");
             anchorLocateCriteria = new AnchorLocateCriteria();
+            Debug.LogWarning("Or only afterwards?");
 
             base.Start();
         }

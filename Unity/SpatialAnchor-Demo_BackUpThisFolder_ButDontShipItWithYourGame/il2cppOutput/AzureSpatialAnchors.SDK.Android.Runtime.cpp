@@ -5360,7 +5360,7 @@ IL_0012:
 		ByteU5BU5D_tA6237BF417AE52AD70CFB4EF24A7A82613DF9031* L_10 = V_0;
 		NullCheck(L_9);
 		String_t* L_11;
-		L_11 = VirtualFuncInvoker1< String_t*, ByteU5BU5D_tA6237BF417AE52AD70CFB4EF24A7A82613DF9031* >::Invoke(34 /* System.String System.Text.Encoding::GetString(System.Byte[]) */, L_9, L_10);
+		L_11 = VirtualFuncInvoker1< String_t*, ByteU5BU5D_tA6237BF417AE52AD70CFB4EF24A7A82613DF9031* >::Invoke(35 /* System.String System.Text.Encoding::GetString(System.Byte[]) */, L_9, L_10);
 		NullCheck(L_11);
 		StringU5BU5D_t7674CD946EC0CE7B3AE0BE70E6EE85F2ECD9F248* L_12;
 		L_12 = String_Split_m9530B73D02054692283BF35C3A27C8F2230946F4(L_11, 0, 0, NULL);
@@ -6677,7 +6677,7 @@ IL_0051:
 			uint64_t L_12 = ___cookie0;
 			NullCheck(L_11);
 			bool L_13;
-			L_13 = InterfaceFuncInvoker1< bool, uint64_t >::Invoke(2 /* System.Boolean System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::Remove(TKey) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_11, L_12);
+			L_13 = InterfaceFuncInvoker1< bool, uint64_t >::Invoke(6 /* System.Boolean System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::Remove(TKey) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_11, L_12);
 			goto IL_0052;
 		}// end try (depth: 1)
 		catch(Il2CppExceptionWrapper& e)
@@ -6719,7 +6719,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* ProjectedObjectEventHandlerCac
 		L_2 = InterfaceFuncInvoker0< uint64_t >::Invoke(0 /* System.UInt64 Microsoft.Azure.SpatialAnchors.ICachedObject::get_Cookie() */, ICachedObject_t3DA91B60DC4FAAE84261CAC395E0E63C223711A7_il2cpp_TypeInfo_var, L_1);
 		NullCheck(L_0);
 		bool L_3;
-		L_3 = InterfaceFuncInvoker2< bool, uint64_t, RuntimeObject** >::Invoke(3 /* System.Boolean System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::TryGetValue(TKey,TValue&) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_0, L_2, (&V_0));
+		L_3 = InterfaceFuncInvoker2< bool, uint64_t, RuntimeObject** >::Invoke(7 /* System.Boolean System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::TryGetValue(TKey,TValue&) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_0, L_2, (&V_0));
 		V_1 = (bool)((((int32_t)L_3) == ((int32_t)0))? 1 : 0);
 		bool L_4 = V_1;
 		if (!L_4)
@@ -6745,7 +6745,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* ProjectedObjectEventHandlerCac
 		L_9 = InterfaceFuncInvoker0< uint64_t >::Invoke(0 /* System.UInt64 Microsoft.Azure.SpatialAnchors.ICachedObject::get_Cookie() */, ICachedObject_t3DA91B60DC4FAAE84261CAC395E0E63C223711A7_il2cpp_TypeInfo_var, L_8);
 		RuntimeObject* L_10 = V_0;
 		NullCheck(L_7);
-		InterfaceActionInvoker2< uint64_t, RuntimeObject* >::Invoke(0 /* System.Void System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::set_Item(TKey,TValue) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_7, L_9, L_10);
+		InterfaceActionInvoker2< uint64_t, RuntimeObject* >::Invoke(1 /* System.Void System.Collections.Generic.IDictionary`2<System.UInt64,System.Collections.Generic.IDictionary`2<System.String,System.Delegate>>::set_Item(TKey,TValue) */, IDictionary_2_t100004F4BC5309A9FFD563D3BC25B2D85189C9C5_il2cpp_TypeInfo_var, L_7, L_9, L_10);
 	}
 
 IL_0039:

@@ -138,26 +138,36 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         {
             base.Start();
 
+            Debug.LogWarning("Before any ifs");
             if (!SanityCheckAccessConfiguration())
             {
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
+                Debug.LogWarning("!SanityCheckAccessConfiguration");
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
                 return;
             }
 
+            Debug.LogWarning("Before samples config");
             SpatialAnchorSamplesConfig samplesConfig = Resources.Load<SpatialAnchorSamplesConfig>("SpatialAnchorSamplesConfig");
             if (string.IsNullOrWhiteSpace(BaseSharingUrl) && samplesConfig != null)
             {
                 BaseSharingUrl = samplesConfig.BaseSharingURL;
             }
 
+            Debug.LogWarning("Before null and empty url");
             if (string.IsNullOrEmpty(BaseSharingUrl))
             {
                 feedbackBox.text = $"Need to set {nameof(BaseSharingUrl)}.";
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
-                XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                // XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
                 return;
             }
             else
@@ -174,12 +184,15 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                 }
             }
 
+            Debug.LogWarning("Watch keys");
             #if !UNITY_EDITOR
             anchorExchanger.WatchKeys(BaseSharingUrl);
             #endif
 
+            Debug.LogWarning("feedbackBox");
             feedbackBox.text = stateParams[currentAppState].StepMessage;
 
+            Debug.LogWarning("after feedbackBox");
             Debug.Log("Azure Spatial Anchors Shared Demo script started");
             EnableCorrectUIControls();
         }
@@ -191,6 +204,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         {
             base.Update();
 
+            Debug.LogWarning("spawnedObject");
             if (spawnedObjectMat != null)
             {
                 float rat = 0.1f;
@@ -330,7 +344,8 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             else if (currentAppState == AppState.DemoStepInputAnchorNumber)
             {
                 long anchorNumber;
-                string inputText = XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().text;
+                //string inputText = XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().text;
+                string inputText = MobileUX.Instance.GetDemoInputField().text;
                 if (!long.TryParse(inputText, out anchorNumber))
                 {
                     feedbackBox.text = "Invalid Anchor Number!";
@@ -349,7 +364,8 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     {
                         _currentDemoFlow = DemoFlow.LocateFlow;
                         currentAppState = AppState.DemoStepCreateSession;
-                        XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().text = "";
+                        MobileUX.Instance.GetDemoInputField().text = "";
+                        //XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().text = "";
                     }
                 }
             }
@@ -465,31 +481,41 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             {
                 case AppState.DemoStepChooseFlow:
 
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
-                    #if UNITY_WSA
-                    XRUXPickerForSharedAnchorDemo.Instance.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.1f;
-                    XRUXPickerForSharedAnchorDemo.Instance.transform.LookAt(Camera.main.transform);
-                    XRUXPickerForSharedAnchorDemo.Instance.transform.Rotate(Vector3.up, 180);
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
-                    #else
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Create & Share Anchor";
-                    #endif
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
+                    MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
+                    MobileUX.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Create & Share Anchor";
+                    MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
+                    // #if UNITY_WSA
+                    // XRUXPickerForSharedAnchorDemo.Instance.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.1f;
+                    // XRUXPickerForSharedAnchorDemo.Instance.transform.LookAt(Camera.main.transform);
+                    // XRUXPickerForSharedAnchorDemo.Instance.transform.Rotate(Vector3.up, 180);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
+                    // #else
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Create & Share Anchor";
+                    // #endif
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
                     break;
                 case AppState.DemoStepInputAnchorNumber:
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(true);
+                    MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
+                    MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                    MobileUX.Instance.GetDemoInputField().gameObject.SetActive(true);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(true);
                     break;
                 default:
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
-                    #if UNITY_WSA
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
-                    #else
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Next Step";
-                    #endif
-                    XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
+                    MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                    MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
+                    MobileUX.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Next Step";
+                    MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                    // #if UNITY_WSA
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                    // #else
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoButtons()[0].transform.Find("Text").GetComponent<Text>().text = "Next Step";
+                    // #endif
+                    // XRUXPickerForSharedAnchorDemo.Instance.GetDemoInputField().gameObject.SetActive(false);
                     break;
             }
         }

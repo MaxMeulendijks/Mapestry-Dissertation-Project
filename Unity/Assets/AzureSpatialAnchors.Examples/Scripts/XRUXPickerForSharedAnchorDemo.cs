@@ -34,11 +34,11 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// <returns>The input field used in the demo.</returns>
         public InputField GetDemoInputField()
         {
-#if UNITY_WSA
-            return HoloLensUXTree.GetComponentInChildren<InputField>(true);
-#else
+// #if UNITY_WSA
+//             return HoloLensUXTree.GetComponentInChildren<InputField>(true);
+// #else
             return MobileAndEditorUXTree.GetComponentInChildren<InputField>(true);
-#endif
+// #endif
         }
     }
 }
