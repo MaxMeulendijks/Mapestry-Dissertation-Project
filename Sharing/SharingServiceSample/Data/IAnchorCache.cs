@@ -14,14 +14,14 @@ namespace SharingService.Data
         /// </summary>
         /// <param name="anchorId">The anchor identifier.</param>
         /// <returns>A <see cref="Task{System.Boolean}"/> containing true if the identifier is found; otherwise false.</returns>
-        Task<bool> ContainsAsync(long anchorId);
+        Task<bool> ContainsAsync(string anchorId, string userId);
 
         /// <summary>
         /// Gets the anchor key asynchronously.
         /// </summary>
         /// <param name="anchorId">The anchor identifier.</param>
         /// <returns>The anchor key.</returns>
-        Task<string> GetAnchorKeyAsync(long anchorId);
+        Task<string> GetAnchorKeyAsync(string anchorId, string userId);
 
         /// <summary>
         /// Gets the last anchor key asynchronously.
@@ -34,6 +34,6 @@ namespace SharingService.Data
         /// </summary>
         /// <param name="anchorKey">The anchor key.</param>
         /// <returns>An <see cref="Task{System.Int64}"/> representing the anchor identifier.</returns>
-        Task<long> SetAnchorKeyAsync(string anchorKey);
+        Task<string> SetAnchorKeyAsync(string anchorKey, string userId, string anchorId);
     }
 }

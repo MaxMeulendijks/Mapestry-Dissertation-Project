@@ -13,10 +13,10 @@ namespace SharingService.Data
     {
         public AnchorCacheEntity() { }
 
-        public AnchorCacheEntity(long anchorId, int partitionSize)
+        public AnchorCacheEntity(string anchorId, string userId)
         {
-            this.PartitionKey = (anchorId / partitionSize).ToString();
-            this.RowKey = anchorId.ToString();
+            this.PartitionKey = userId;
+            this.RowKey = anchorId;
         }
 
         public string AnchorKey { get; set; }
@@ -28,7 +28,7 @@ namespace SharingService.Data
         /// <summary>
         /// Super basic partitioning scheme
         /// </summary>
-        private const int partitionSize = 500;
+        // private const int partitionSize = 500;
 
         /// <summary>
         /// The database cache.
@@ -38,7 +38,7 @@ namespace SharingService.Data
         /// <summary>
         /// The anchor numbering index.
         /// </summary>
-        private long lastAnchorNumberIndex = -1;
+        //private long lastAnchorNumberIndex = -1;
 
         // To ensure our asynchronous initialization code is only ever invoked once, we employ two manualResetEvents
         ManualResetEventSlim initialized = new ManualResetEventSlim();
@@ -71,11 +71,11 @@ namespace SharingService.Data
         /// </summary>
         /// <param name="anchorId">The anchor identifier.</param>
         /// <returns>A <see cref="Task{System.Boolean}" /> containing true if the identifier is found; otherwise false.</returns>
-        public async Task<bool> ContainsAsync(long anchorId)
+        public async Task<bool> ContainsAsync(string anchorId, string userId)
         {
             await this.InitializeAsync();
 
-            TableResult result = await this.dbCache.ExecuteAsync(TableOperation.Retrieve<AnchorCacheEntity>((anchorId / CosmosDbCache.partitionSize).ToString(), anchorId.ToString()));
+            TableResult result = await this.dbCache.ExecuteAsync(TableOperation.Retrieve<AnchorCacheEntity>(userId, anchorId));
             AnchorCacheEntity anchorEntity = result.Result as AnchorCacheEntity;
             return anchorEntity != null;
         }
@@ -86,11 +86,11 @@ namespace SharingService.Data
         /// <param name="anchorId">The anchor identifier.</param>
         /// <exception cref="KeyNotFoundException"></exception>
         /// <returns>The anchor key.</returns>
-        public async Task<string> GetAnchorKeyAsync(long anchorId)
+        public async Task<string> GetAnchorKeyAsync(string anchorId, string userId)
         {
             await this.InitializeAsync();
 
-            TableResult result = await this.dbCache.ExecuteAsync(TableOperation.Retrieve<AnchorCacheEntity>((anchorId / CosmosDbCache.partitionSize).ToString(), anchorId.ToString()));
+            TableResult result = await this.dbCache.ExecuteAsync(TableOperation.Retrieve<AnchorCacheEntity>(userId, anchorId));
             AnchorCacheEntity anchorEntity = result.Result as AnchorCacheEntity;
             if (anchorEntity != null)
             {
@@ -135,33 +135,33 @@ namespace SharingService.Data
         /// </summary>
         /// <param name="anchorKey">The anchor key.</param>
         /// <returns>An <see cref="Task{System.Int64}" /> representing the anchor identifier.</returns>
-        public async Task<long> SetAnchorKeyAsync(string anchorKey)
+        public async Task<string> SetAnchorKeyAsync(string anchorKey, string anchorId, string userId)
         {
             await this.InitializeAsync();
 
-            if (lastAnchorNumberIndex == long.MaxValue)
-            {
-                // Reset the anchor number index.
-                lastAnchorNumberIndex = -1;
-            }
+            // if (lastAnchorNumberIndex == long.MaxValue)
+            // {
+            //     // Reset the anchor number index.
+            //     lastAnchorNumberIndex = -1;
+            // }
 
-            if(lastAnchorNumberIndex < 0)
-            {
-                // Query last row key
-                var rowKey = (await this.GetLastAnchorAsync())?.RowKey;
-                long.TryParse(rowKey, out lastAnchorNumberIndex);
-            }
+            // if(lastAnchorNumberIndex < 0)
+            // {
+            //     // Query last row key
+            //     var rowKey = (await this.GetLastAnchorAsync())?.RowKey;
+            //     long.TryParse(rowKey, out lastAnchorNumberIndex);
+            // }
 
-            long newAnchorNumberIndex = ++lastAnchorNumberIndex;
+            //long newAnchorNumberIndex = ++lastAnchorNumberIndex;
 
-            AnchorCacheEntity anchorEntity = new AnchorCacheEntity(newAnchorNumberIndex, CosmosDbCache.partitionSize)
+            AnchorCacheEntity anchorEntity = new AnchorCacheEntity(anchorId, userId)
             {
                 AnchorKey = anchorKey
             };
 
             await this.dbCache.ExecuteAsync(TableOperation.Insert(anchorEntity));
 
-            return newAnchorNumberIndex;
+            return anchorId;
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             feedbackBox = MobileUX.Instance.GetFeedbackText();
             if (feedbackBox == null)
             {
-                Debug.Log($"{nameof(feedbackBox)} not found in scene by XRUXPicker.");
+                Debug.Log($"{nameof(feedbackBox)} not found in scene by MobileUX.");
                 Destroy(this);
                 return;
             }
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             // Return to the launcher scene
             UnityDispatcher.InvokeOnAppThread(() =>
             {
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(1);
             });
         }
 
@@ -370,8 +370,9 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// <summary>
         /// Called when a cloud anchor is saved successfully.
         /// </summary>
-        protected virtual Task OnSaveCloudAnchorSuccessfulAsync()
+        protected virtual Task OnSaveCloudAnchorSuccessfulAsync(string anchorNumber)
         {
+            Debug.Log("Starting to save anchor named: " + anchorNumber);
             // To be overridden.
             return Task.CompletedTask;
         }
@@ -423,7 +424,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// <summary>
         /// Saves the current object anchor to the cloud.
         /// </summary>
-        protected virtual async Task SaveCurrentObjectAnchorToCloudAsync()
+        protected virtual async Task SaveCurrentObjectAnchorToCloudAsync(string anchorId)
         {
             // Get the cloud-native anchor behavior
             CloudNativeAnchor cna = spawnedObject.GetComponent<CloudNativeAnchor>();
@@ -462,7 +463,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                 {
                     // Await override, which may perform additional tasks
                     // such as storing the key in the AnchorExchanger
-                    await OnSaveCloudAnchorSuccessfulAsync();
+                    await OnSaveCloudAnchorSuccessfulAsync(anchorId);
                 }
                 else
                 {

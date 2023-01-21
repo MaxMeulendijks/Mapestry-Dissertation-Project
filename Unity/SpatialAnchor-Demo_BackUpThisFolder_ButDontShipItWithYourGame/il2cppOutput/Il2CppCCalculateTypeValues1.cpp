@@ -272,8 +272,8 @@ struct Dictionary_2_tD7146A56C3936312AE04F38654C7FF6266911637;
 struct Dictionary_2_t88A5AB9EE149865A5E1CC7D5CAEEF8FDE1CB8FB8;
 // System.Collections.Generic.Dictionary`2<Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsNearbyDemoScript/AppState,System.Collections.Generic.Dictionary`2<System.String,UnityEngine.GameObject>>
 struct Dictionary_2_tDF21C1579C6288320CD1BDA02F5D04D5FA8C5420;
-// System.Collections.Generic.Dictionary`2<Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/AppState,Microsoft.Azure.SpatialAnchors.Unity.Examples.DemoScriptBase/DemoStepParams>
-struct Dictionary_2_t37C14D66D6F6209E61BE1565E86DD92D847B625E;
+// System.Collections.Generic.Dictionary`2<Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/AppState,Microsoft.Azure.SpatialAnchors.Unity.Examples.DemoScriptBase/DemoStepParams>
+struct Dictionary_2_tA41FAE376E17FF4D18F2729458668A5B36B5C5A8;
 // UnityEngine.EventSystems.ExecuteEvents/EventFunction`1<UnityEngine.EventSystems.IBeginDragHandler>
 struct EventFunction_1_t5B9F26DC56564B82AEF63D8AFEEEADBAB365F403;
 // UnityEngine.EventSystems.ExecuteEvents/EventFunction`1<UnityEngine.EventSystems.ICancelHandler>
@@ -1024,8 +1024,6 @@ struct AzureSpatialAnchorsBasicDemoScript_t80AB2268A9AA26E3DD0CCE0C4C15192DEFE22
 struct AzureSpatialAnchorsCoarseRelocDemoScript_tF6C1B9FE613992120020EC3C663A5A765338C586;
 // Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsNearbyDemoScript
 struct AzureSpatialAnchorsNearbyDemoScript_tD3715A4F2AB079ECB4C57E3C94653A5AC3FA338F;
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript
-struct AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765;
 // UnityEngine.EventSystems.BaseEventData
 struct BaseEventData_tE03A848325C0AE8E76C6CA15FD86395EBF83364F;
 // UnityEngine.EventSystems.BaseInput
@@ -1100,6 +1098,8 @@ struct ContentValidator_t42EB1802005FF0D871EE98A34ADB69091CCE48FE;
 struct CookieContainer_t54CCEBC3470E5D0699BB17928C171D7AFCA7614E;
 // UnityEngine.Coroutine
 struct Coroutine_t85EA685566A254C23F3FD77AB5BDFFFF8799596B;
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors
+struct CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087;
 // System.Security.Cryptography.DSA
 struct DSA_tB12EE3AEA99FBD41DE318E2A371878CA94653E41;
 // System.Xml.Schema.DatatypeImplementation
@@ -6351,15 +6351,6 @@ struct U3CU3Ec__DisplayClass18_0_t61D742F64CDC3B58D9A8FF58C3AE082A2C7739F4  : pu
 	AnchorLocatedEventArgs_t69880DB3A06B6A26AEFCA3F1C2A06B66C5DF1CD0* ___args_1;
 };
 
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<>c__DisplayClass16_0
-struct U3CU3Ec__DisplayClass16_0_t15EE38F3DBEF4D4342E47F0B31FFB3A3C343696A  : public RuntimeObject
-{
-	// Microsoft.Azure.SpatialAnchors.CloudSpatialAnchor Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<>c__DisplayClass16_0::nextCsa
-	CloudSpatialAnchor_t872B6BE2B3658D445ACA7318182EE757E35BD231* ___nextCsa_0;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<>c__DisplayClass16_0::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_1;
-};
-
 // Mono.Math.BigInteger/Kernel
 struct Kernel_t3E9C89E842E791BDCEC06BE4D7788BC552315ED2  : public RuntimeObject
 {
@@ -6535,6 +6526,15 @@ struct U3CU3Ec__DisplayClass9_0_t6AF984F6FA8B91B157582A4DDDAD244DCE5BD194  : pub
 	uint64_t ___cookie_0;
 	// System.Boolean Microsoft.Azure.SpatialAnchors.CloudSpatialAnchorWatcher/<>c__DisplayClass9_0::transfer
 	bool ___transfer_1;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<>c__DisplayClass16_0
+struct U3CU3Ec__DisplayClass16_0_t3D065FFFEAA4D3FF4312B7A70AFA6CAF810087A6  : public RuntimeObject
+{
+	// Microsoft.Azure.SpatialAnchors.CloudSpatialAnchor Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<>c__DisplayClass16_0::nextCsa
+	CloudSpatialAnchor_t872B6BE2B3658D445ACA7318182EE757E35BD231* ___nextCsa_0;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<>c__DisplayClass16_0::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_1;
 };
 
 // System.Xml.Schema.DatatypeImplementation/SchemaDatatypeMap
@@ -27003,36 +27003,6 @@ struct U3CU3CEnumerateAllNearbyAnchorsU3Eb__30_0U3Ed_t83F03EBEB1EA8ACDD1FBF51799
 	TaskAwaiter_1_t28138EB3844C48D7EA7A4D16542A275DD34CBC89 ___U3CU3Eu__2_12;
 };
 
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26
-struct U3CInitializeCreateFlowDemoU3Ed__26_t48C8AC2272877BD471C796381D6063CD831C70AD  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncVoidMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26::<>t__builder
-	AsyncVoidMethodBuilder_t253E37B63E7E7B504878AE6563347C147F98EF2D ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Exception Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26::<ex>5__1
-	Exception_t* ___U3CexU3E5__1_3;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemo>d__26::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28
-struct U3CInitializeLocateFlowDemoU3Ed__28_t5DC724869A8B3CB371EDCA11886490CD26712315  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncVoidMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28::<>t__builder
-	AsyncVoidMethodBuilder_t253E37B63E7E7B504878AE6563347C147F98EF2D ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Exception Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28::<ex>5__1
-	Exception_t* ___U3CexU3E5__1_3;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemo>d__28::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
-};
-
 // Microsoft.Azure.SpatialAnchors.CloudSpatialAnchorSession/<GetAccessTokenWithAccountKeyAsync>d__65
 struct U3CGetAccessTokenWithAccountKeyAsyncU3Ed__65_t771603F3CC8970E0E6D0D9AF7DA84A1A180224FA  : public RuntimeObject
 {
@@ -27141,6 +27111,36 @@ struct U3CCreateManifestAsyncU3Ed__15_t33599D00232AA2D7B871ED8B031EC3F8B18A5BA0 
 	String_t* ___U3CU3Es__2_5;
 	// System.Runtime.CompilerServices.TaskAwaiter`1<System.String> Microsoft.Azure.SpatialAnchors.CloudSpatialAnchorSessionDiagnostics/<CreateManifestAsync>d__15::<>u__1
 	TaskAwaiter_1_t254638BB1FAD695D9A9542E098A189D438A000F6 ___U3CU3Eu__1_6;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26
+struct U3CInitializeCreateFlowDemoU3Ed__26_t69F46ACD1C3DE3B242F6FD76A6A0C1B082701713  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncVoidMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26::<>t__builder
+	AsyncVoidMethodBuilder_t253E37B63E7E7B504878AE6563347C147F98EF2D ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Exception Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26::<ex>5__1
+	Exception_t* ___U3CexU3E5__1_3;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemo>d__26::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28
+struct U3CInitializeLocateFlowDemoU3Ed__28_tE64C7CC96E2F485A8DC463E8BBA36B72F8C3993A  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncVoidMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28::<>t__builder
+	AsyncVoidMethodBuilder_t253E37B63E7E7B504878AE6563347C147F98EF2D ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Exception Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28::<ex>5__1
+	Exception_t* ___U3CexU3E5__1_3;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemo>d__28::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
 };
 
 // Microsoft.Azure.SpatialAnchors.Unity.Examples.DemoScriptBase/<AdvanceDemo>d__16
@@ -29470,102 +29470,6 @@ struct U3COnSaveCloudAnchorSuccessfulAsyncU3Ed__24_tF32F7FE441D5D2C65C0A582877DA
 	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_3;
 };
 
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29
-struct U3CAdvanceCreateFlowDemoAsyncU3Ed__29_t2990A920153CA9FABF73FCA4CB7DED7F8D28908D  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29::<>s__1
-	int32_t ___U3CU3Es__1_3;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceCreateFlowDemoAsync>d__29::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceDemoAsync>d__24
-struct U3CAdvanceDemoAsyncU3Ed__24_tDD2E70FDCB0B919CDAC9481B720416897F362C3B  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceDemoAsync>d__24::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceDemoAsync>d__24::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceDemoAsync>d__24::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceDemoAsync>d__24::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_3;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30
-struct U3CAdvanceLocateFlowDemoAsyncU3Ed__30_tEEC22296CF5AF8943FFA6F8B3CE0FAA4A057E0B0  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30::<>s__1
-	int32_t ___U3CU3Es__1_3;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<AdvanceLocateFlowDemoAsync>d__30::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemoAsync>d__25
-struct U3CInitializeCreateFlowDemoAsyncU3Ed__25_tD73973493CDCDA8362ACA63BB1BE602AE0F089A0  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemoAsync>d__25::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemoAsync>d__25::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemoAsync>d__25::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeCreateFlowDemoAsync>d__25::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_3;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27
-struct U3CInitializeLocateFlowDemoAsyncU3Ed__27_tCB4561C1799E0D83DBB32653B0A4D9D0AF13AD9D  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<anchorNumber>5__1
-	int64_t ___U3CanchorNumberU3E5__1_3;
-	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<inputText>5__2
-	String_t* ___U3CinputTextU3E5__2_4;
-	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>s__3
-	String_t* ___U3CU3Es__3_5;
-	// System.Runtime.CompilerServices.TaskAwaiter`1<System.String> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>u__1
-	TaskAwaiter_1_t254638BB1FAD695D9A9542E098A189D438A000F6 ___U3CU3Eu__1_6;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<InitializeLocateFlowDemoAsync>d__27::<>u__2
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__2_7;
-};
-
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22
-struct U3COnSaveCloudAnchorSuccessfulAsyncU3Ed__22_tB43A6BE737B1A8CE36B0161F655EB754063A7D31  : public RuntimeObject
-{
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>1__state
-	int32_t ___U3CU3E1__state_0;
-	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>t__builder
-	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>4__this
-	AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765* ___U3CU3E4__this_2;
-	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<anchorNumber>5__1
-	int64_t ___U3CanchorNumberU3E5__1_3;
-	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>s__2
-	int64_t ___U3CU3Es__2_4;
-	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>u__1
-	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_5;
-	// System.Runtime.CompilerServices.TaskAwaiter`1<System.Int64> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>u__2
-	TaskAwaiter_1_tFDF1CD4803B3D752884BCB63E51052CC6D7B2FFD ___U3CU3Eu__2_6;
-};
-
 // UnityEngine.Rendering.BatchRendererGroup/OnPerformCulling
 struct OnPerformCulling_t02E073FD42F34E90694BF7D1C321EC8007FB45F2  : public MulticastDelegate_t
 {
@@ -29694,6 +29598,102 @@ struct U3CSubmitManifestAsyncU3Ed__16_t9D17F36B4AD809F54DD2EB385DE3232C0EF64632 
 	U3CU3Ec__DisplayClass16_0_t501B947B15F1CC9363079BC56663B32BAC503B96* ___U3CU3E8__1_4;
 	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.CloudSpatialAnchorSessionDiagnostics/<SubmitManifestAsync>d__16::<>u__1
 	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_5;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29
+struct U3CAdvanceCreateFlowDemoAsyncU3Ed__29_t6E975F60E33BE800D4C4314BACFC49576245C23F  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29::<>s__1
+	int32_t ___U3CU3Es__1_3;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceCreateFlowDemoAsync>d__29::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceDemoAsync>d__24
+struct U3CAdvanceDemoAsyncU3Ed__24_tE0E10EED3D0FD6181A00772D356BC38C9936CB94  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceDemoAsync>d__24::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceDemoAsync>d__24::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceDemoAsync>d__24::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceDemoAsync>d__24::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_3;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30
+struct U3CAdvanceLocateFlowDemoAsyncU3Ed__30_t198CCD97FC7918703F55DFCF81D2E01C594879EF  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30::<>s__1
+	int32_t ___U3CU3Es__1_3;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<AdvanceLocateFlowDemoAsync>d__30::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_4;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemoAsync>d__25
+struct U3CInitializeCreateFlowDemoAsyncU3Ed__25_tAEB2343A9EA2920CD47CD82D0CC74CC47973AE18  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemoAsync>d__25::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemoAsync>d__25::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemoAsync>d__25::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeCreateFlowDemoAsync>d__25::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_3;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27
+struct U3CInitializeLocateFlowDemoAsyncU3Ed__27_tA94251E0D2FF5032C9F7414F963983D0CFB285F7  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<anchorNumber>5__1
+	int64_t ___U3CanchorNumberU3E5__1_3;
+	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<inputText>5__2
+	String_t* ___U3CinputTextU3E5__2_4;
+	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>s__3
+	String_t* ___U3CU3Es__3_5;
+	// System.Runtime.CompilerServices.TaskAwaiter`1<System.String> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>u__1
+	TaskAwaiter_1_t254638BB1FAD695D9A9542E098A189D438A000F6 ___U3CU3Eu__1_6;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<InitializeLocateFlowDemoAsync>d__27::<>u__2
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__2_7;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22
+struct U3COnSaveCloudAnchorSuccessfulAsyncU3Ed__22_t634CC8611D78CDFF476A68CB03EB39AFB38E069B  : public RuntimeObject
+{
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>1__state
+	int32_t ___U3CU3E1__state_0;
+	// System.Runtime.CompilerServices.AsyncTaskMethodBuilder Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>t__builder
+	AsyncTaskMethodBuilder_t7A5128C134547B5918EB1AA24FE47ED4C1DF3F06 ___U3CU3Et__builder_1;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>4__this
+	CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087* ___U3CU3E4__this_2;
+	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<anchorNumber>5__1
+	int64_t ___U3CanchorNumberU3E5__1_3;
+	// System.Int64 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>s__2
+	int64_t ___U3CU3Es__2_4;
+	// System.Runtime.CompilerServices.TaskAwaiter Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>u__1
+	TaskAwaiter_t9B661AC8C2EFA6BAB94C77BB24A5DDA82D61F833 ___U3CU3Eu__1_5;
+	// System.Runtime.CompilerServices.TaskAwaiter`1<System.Int64> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/<OnSaveCloudAnchorSuccessfulAsync>d__22::<>u__2
+	TaskAwaiter_1_tFDF1CD4803B3D752884BCB63E51052CC6D7B2FFD ___U3CU3Eu__2_6;
 };
 
 // UnityEngine.CullingGroup/StateChanged
@@ -33130,38 +33130,38 @@ struct AzureSpatialAnchorsNearbyDemoScript_tD3715A4F2AB079ECB4C57E3C94653A5AC3FA
 	List_1_t386E09F4F22DDE4D2AC41A8567FFF283C254537B* ___allSpawnedMaterials_26;
 };
 
-// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript
-struct AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765  : public DemoScriptBase_tC7DF67E189A718398BAD079EFA346993313F5949
-{
-	// System.Collections.Generic.Dictionary`2<Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/AppState,Microsoft.Azure.SpatialAnchors.Unity.Examples.DemoScriptBase/DemoStepParams> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::stateParams
-	Dictionary_2_t37C14D66D6F6209E61BE1565E86DD92D847B625E* ___stateParams_17;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AnchorExchanger Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::anchorExchanger
-	AnchorExchanger_tEDF2047C1BD58B1A3767EA4C1644F4BC1B2C253B* ___anchorExchanger_18;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::_currentAppState
-	int32_t ____currentAppState_19;
-	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript/DemoFlow Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::_currentDemoFlow
-	int32_t ____currentDemoFlow_20;
-	// System.Collections.Generic.List`1<UnityEngine.GameObject> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::otherSpawnedObjects
-	List_1_tB951CE80B58D1BF9650862451D8DAD8C231F207B* ___otherSpawnedObjects_21;
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::anchorsLocated
-	int32_t ___anchorsLocated_22;
-	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::anchorsExpected
-	int32_t ___anchorsExpected_23;
-	// System.Collections.Generic.List`1<System.String> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::localAnchorIds
-	List_1_tF470A3BE5C1B5B68E1325EF3F109D172E60BD7CD* ___localAnchorIds_24;
-	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::_anchorKeyToFind
-	String_t* ____anchorKeyToFind_25;
-	// System.Nullable`1<System.Int64> Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::_anchorNumberToFind
-	Nullable_1_t365991B3904FDA7642A788423B28692FDC7CDB17 ____anchorNumberToFind_26;
-	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.AzureSpatialAnchorsSharedAnchorDemoScript::baseSharingUrl
-	String_t* ___baseSharingUrl_27;
-};
-
 // UnityEngine.UI.Button
 struct Button_t6786514A57F7AFDEE5431112FEA0CAB24F5AE098  : public Selectable_t3251808068A17B8E92FB33590A4C2FA66D456712
 {
 	// UnityEngine.UI.Button/ButtonClickedEvent UnityEngine.UI.Button::m_OnClick
 	ButtonClickedEvent_t8EA72E90B3BD1392FB3B3EF167D5121C23569E4C* ___m_OnClick_20;
+};
+
+// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors
+struct CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087  : public DemoScriptBase_tC7DF67E189A718398BAD079EFA346993313F5949
+{
+	// System.Collections.Generic.Dictionary`2<Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/AppState,Microsoft.Azure.SpatialAnchors.Unity.Examples.DemoScriptBase/DemoStepParams> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::stateParams
+	Dictionary_2_tA41FAE376E17FF4D18F2729458668A5B36B5C5A8* ___stateParams_17;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.AnchorExchanger Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::anchorExchanger
+	AnchorExchanger_tEDF2047C1BD58B1A3767EA4C1644F4BC1B2C253B* ___anchorExchanger_18;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/AppState Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::_currentAppState
+	int32_t ____currentAppState_19;
+	// Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors/DemoFlow Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::_currentDemoFlow
+	int32_t ____currentDemoFlow_20;
+	// System.Collections.Generic.List`1<UnityEngine.GameObject> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::otherSpawnedObjects
+	List_1_tB951CE80B58D1BF9650862451D8DAD8C231F207B* ___otherSpawnedObjects_21;
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::anchorsLocated
+	int32_t ___anchorsLocated_22;
+	// System.Int32 Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::anchorsExpected
+	int32_t ___anchorsExpected_23;
+	// System.Collections.Generic.List`1<System.String> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::localAnchorIds
+	List_1_tF470A3BE5C1B5B68E1325EF3F109D172E60BD7CD* ___localAnchorIds_24;
+	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::_anchorKeyToFind
+	String_t* ____anchorKeyToFind_25;
+	// System.Nullable`1<System.Int64> Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::_anchorNumberToFind
+	Nullable_1_t365991B3904FDA7642A788423B28692FDC7CDB17 ____anchorNumberToFind_26;
+	// System.String Microsoft.Azure.SpatialAnchors.Unity.Examples.CreateAnchors::baseSharingUrl
+	String_t* ___baseSharingUrl_27;
 };
 
 // System.Xml.Schema.Datatype_ENTITY
@@ -37716,75 +37716,75 @@ const Il2CppTypeDefinitionSizes g_typeDefinitionSize7020 = { sizeof(U3CDoSearchi
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7021;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize7021 = { sizeof(AzureSpatialAnchorsNearbyDemoScript_tD3715A4F2AB079ECB4C57E3C94653A5AC3FA338F), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7022;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7022 = { sizeof(int32_t)+ sizeof(RuntimeObject), sizeof(int32_t), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7022 = { sizeof(BasicGazeCursor_tAFCF016E21EB02BA05A23B477AD05FE4FFCAEA86), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7023;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7023 = { sizeof(int32_t)+ sizeof(RuntimeObject), sizeof(int32_t), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7023 = { sizeof(CoarseRelocSettings_t82C353141C7BD4DB0D41CAAF00FD86C41F3D1D52), -1, sizeof(CoarseRelocSettings_t82C353141C7BD4DB0D41CAAF00FD86C41F3D1D52_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7024;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7024 = { sizeof(U3CU3Ec__DisplayClass16_0_t15EE38F3DBEF4D4342E47F0B31FFB3A3C343696A), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7024 = { sizeof(DemoStepParams_t69362E39063F8601F38657C1B62021A83816D6B1)+ sizeof(RuntimeObject), sizeof(DemoStepParams_t69362E39063F8601F38657C1B62021A83816D6B1_marshaled_pinvoke), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7025;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7025 = { sizeof(U3COnSaveCloudAnchorSuccessfulAsyncU3Ed__22_tB43A6BE737B1A8CE36B0161F655EB754063A7D31), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7025 = { sizeof(U3CAdvanceDemoU3Ed__16_tBCF3154796A3EA65FAEC4C468B7D988D72AC9B05), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7026;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7026 = { sizeof(U3CAdvanceDemoAsyncU3Ed__24_tDD2E70FDCB0B919CDAC9481B720416897F362C3B), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7026 = { sizeof(U3CU3Ec_tC04EAD7CEF8E98786CD3F12F987CD2429C9A7F18), -1, sizeof(U3CU3Ec_tC04EAD7CEF8E98786CD3F12F987CD2429C9A7F18_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7027;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7027 = { sizeof(U3CInitializeCreateFlowDemoAsyncU3Ed__25_tD73973493CDCDA8362ACA63BB1BE602AE0F089A0), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7027 = { sizeof(U3CReturnToLauncherU3Ed__17_t9AAD23CF99AD2B746EA5547252629387567DA3E2), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7028;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7028 = { sizeof(U3CInitializeCreateFlowDemoU3Ed__26_t48C8AC2272877BD471C796381D6063CD831C70AD), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7028 = { sizeof(U3CU3Ec__DisplayClass34_0_tDEC3A4ADFBDB3788A8D70BEA0FE4E27292F4BBC0), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7029;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7029 = { sizeof(U3CInitializeLocateFlowDemoAsyncU3Ed__27_tCB4561C1799E0D83DBB32653B0A4D9D0AF13AD9D), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7029 = { sizeof(U3CSaveCurrentObjectAnchorToCloudAsyncU3Ed__39_tDA6E00ED8B9CEA0D6B1B851F79C855BC2AD964DB), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7030;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7030 = { sizeof(U3CInitializeLocateFlowDemoU3Ed__28_t5DC724869A8B3CB371EDCA11886490CD26712315), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7030 = { sizeof(U3CU3Ec__DisplayClass46_0_tAA08115A01BF738803BE7132051B4DB2BFF44EC4), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7031;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7031 = { sizeof(U3CAdvanceCreateFlowDemoAsyncU3Ed__29_t2990A920153CA9FABF73FCA4CB7DED7F8D28908D), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7031 = { sizeof(DemoScriptBase_tC7DF67E189A718398BAD079EFA346993313F5949), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7032;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7032 = { sizeof(U3CAdvanceLocateFlowDemoAsyncU3Ed__30_tEEC22296CF5AF8943FFA6F8B3CE0FAA4A057E0B0), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7032 = { sizeof(FollowUserGaze_t564FEE5D2FC50FD545A173F850AFC990A9EDBCF4), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7033;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7033 = { sizeof(AzureSpatialAnchorsSharedAnchorDemoScript_tB8128C762BCC18CE7EB8CEF53F8173FC3C1B5765), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7033 = { sizeof(InputInteractionBase_tFCA48E22B9A2991A4BA836FC4ED9D633CAD96B9D), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7034;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7034 = { sizeof(BasicGazeCursor_tAFCF016E21EB02BA05A23B477AD05FE4FFCAEA86), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7034 = { sizeof(KeypadInputButton_tDC3ADD02D95FC733FC2C47B4184A6ED0500BB2F2), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7035;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7035 = { sizeof(CoarseRelocSettings_t82C353141C7BD4DB0D41CAAF00FD86C41F3D1D52), -1, sizeof(CoarseRelocSettings_t82C353141C7BD4DB0D41CAAF00FD86C41F3D1D52_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7035 = { sizeof(KeypadInputControl_t1AC872E59B12723AFFA30D42DF212FC87E1E9351), -1, sizeof(KeypadInputControl_t1AC872E59B12723AFFA30D42DF212FC87E1E9351_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7036;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7036 = { sizeof(DemoStepParams_t69362E39063F8601F38657C1B62021A83816D6B1)+ sizeof(RuntimeObject), sizeof(DemoStepParams_t69362E39063F8601F38657C1B62021A83816D6B1_marshaled_pinvoke), 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7036 = { sizeof(U3CStartU3Ed__6_t0CFB54CD737BFD14B033D98CC306155D8105DC84), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7037;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7037 = { sizeof(U3CAdvanceDemoU3Ed__16_tBCF3154796A3EA65FAEC4C468B7D988D72AC9B05), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7037 = { sizeof(SceneSelector_tFDB5D62D46D4FC76446BB615BC976922136082A1), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7038;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7038 = { sizeof(U3CU3Ec_tC04EAD7CEF8E98786CD3F12F987CD2429C9A7F18), -1, sizeof(U3CU3Ec_tC04EAD7CEF8E98786CD3F12F987CD2429C9A7F18_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7038 = { sizeof(SensorPermissionHelper_tDB720B77D66EAE715B59FC39696C4697AB49EDFD), -1, sizeof(SensorPermissionHelper_tDB720B77D66EAE715B59FC39696C4697AB49EDFD_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7039;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7039 = { sizeof(U3CReturnToLauncherU3Ed__17_t9AAD23CF99AD2B746EA5547252629387567DA3E2), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7039 = { sizeof(SpatialAnchorSamplesConfig_tDB2A3B9A74C96CA870ED0ED62BF90CAE6C954927), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7040;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7040 = { sizeof(U3CU3Ec__DisplayClass34_0_tDEC3A4ADFBDB3788A8D70BEA0FE4E27292F4BBC0), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7040 = { sizeof(XRCameraPicker_t11F97767B1FC6B5FA3C7F3A5718720A347EC6DD3), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7041;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7041 = { sizeof(U3CSaveCurrentObjectAnchorToCloudAsyncU3Ed__39_tDA6E00ED8B9CEA0D6B1B851F79C855BC2AD964DB), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7041 = { sizeof(XRUXPicker_t6E207D28A79AE7D6E611705B236AF1FBF32C9A06), -1, sizeof(XRUXPicker_t6E207D28A79AE7D6E611705B236AF1FBF32C9A06_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7042;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7042 = { sizeof(U3CU3Ec__DisplayClass46_0_tAA08115A01BF738803BE7132051B4DB2BFF44EC4), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7042 = { sizeof(XRUXPickerForLauncher_t9671271DFB2A23F281E05C199039FAD1CA176FC4), -1, sizeof(XRUXPickerForLauncher_t9671271DFB2A23F281E05C199039FAD1CA176FC4_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7043;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7043 = { sizeof(DemoScriptBase_tC7DF67E189A718398BAD079EFA346993313F5949), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7043 = { sizeof(XRUXPickerForSharedAnchorDemo_t24DA327933749CCB418D9CB01EB1555A65910C62), -1, sizeof(XRUXPickerForSharedAnchorDemo_t24DA327933749CCB418D9CB01EB1555A65910C62_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7044;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7044 = { sizeof(FollowUserGaze_t564FEE5D2FC50FD545A173F850AFC990A9EDBCF4), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7044 = { sizeof(MobileUX_t4FB8B9DA07F0EEE910A09236A417CB5DE254DBB6), -1, sizeof(MobileUX_t4FB8B9DA07F0EEE910A09236A417CB5DE254DBB6_StaticFields), 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7045;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7045 = { sizeof(InputInteractionBase_tFCA48E22B9A2991A4BA836FC4ED9D633CAD96B9D), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7045 = { sizeof(int32_t)+ sizeof(RuntimeObject), sizeof(int32_t), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7046;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7046 = { sizeof(KeypadInputButton_tDC3ADD02D95FC733FC2C47B4184A6ED0500BB2F2), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7046 = { sizeof(int32_t)+ sizeof(RuntimeObject), sizeof(int32_t), 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7047;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7047 = { sizeof(KeypadInputControl_t1AC872E59B12723AFFA30D42DF212FC87E1E9351), -1, sizeof(KeypadInputControl_t1AC872E59B12723AFFA30D42DF212FC87E1E9351_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7047 = { sizeof(U3CU3Ec__DisplayClass16_0_t3D065FFFEAA4D3FF4312B7A70AFA6CAF810087A6), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7048;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7048 = { sizeof(U3CStartU3Ed__6_t0CFB54CD737BFD14B033D98CC306155D8105DC84), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7048 = { sizeof(U3COnSaveCloudAnchorSuccessfulAsyncU3Ed__22_t634CC8611D78CDFF476A68CB03EB39AFB38E069B), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7049;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7049 = { sizeof(SceneSelector_tFDB5D62D46D4FC76446BB615BC976922136082A1), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7049 = { sizeof(U3CAdvanceDemoAsyncU3Ed__24_tE0E10EED3D0FD6181A00772D356BC38C9936CB94), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7050;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7050 = { sizeof(SensorPermissionHelper_tDB720B77D66EAE715B59FC39696C4697AB49EDFD), -1, sizeof(SensorPermissionHelper_tDB720B77D66EAE715B59FC39696C4697AB49EDFD_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7050 = { sizeof(U3CInitializeCreateFlowDemoAsyncU3Ed__25_tAEB2343A9EA2920CD47CD82D0CC74CC47973AE18), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7051;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7051 = { sizeof(SpatialAnchorSamplesConfig_tDB2A3B9A74C96CA870ED0ED62BF90CAE6C954927), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7051 = { sizeof(U3CInitializeCreateFlowDemoU3Ed__26_t69F46ACD1C3DE3B242F6FD76A6A0C1B082701713), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7052;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7052 = { sizeof(XRCameraPicker_t11F97767B1FC6B5FA3C7F3A5718720A347EC6DD3), -1, 0, 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7052 = { sizeof(U3CInitializeLocateFlowDemoAsyncU3Ed__27_tA94251E0D2FF5032C9F7414F963983D0CFB285F7), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7053;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7053 = { sizeof(XRUXPicker_t6E207D28A79AE7D6E611705B236AF1FBF32C9A06), -1, sizeof(XRUXPicker_t6E207D28A79AE7D6E611705B236AF1FBF32C9A06_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7053 = { sizeof(U3CInitializeLocateFlowDemoU3Ed__28_tE64C7CC96E2F485A8DC463E8BBA36B72F8C3993A), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7054;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7054 = { sizeof(XRUXPickerForLauncher_t9671271DFB2A23F281E05C199039FAD1CA176FC4), -1, sizeof(XRUXPickerForLauncher_t9671271DFB2A23F281E05C199039FAD1CA176FC4_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7054 = { sizeof(U3CAdvanceCreateFlowDemoAsyncU3Ed__29_t6E975F60E33BE800D4C4314BACFC49576245C23F), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7055;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7055 = { sizeof(XRUXPickerForSharedAnchorDemo_t24DA327933749CCB418D9CB01EB1555A65910C62), -1, sizeof(XRUXPickerForSharedAnchorDemo_t24DA327933749CCB418D9CB01EB1555A65910C62_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7055 = { sizeof(U3CAdvanceLocateFlowDemoAsyncU3Ed__30_t198CCD97FC7918703F55DFCF81D2E01C594879EF), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7056;
-const Il2CppTypeDefinitionSizes g_typeDefinitionSize7056 = { sizeof(MobileUX_t4FB8B9DA07F0EEE910A09236A417CB5DE254DBB6), -1, sizeof(MobileUX_t4FB8B9DA07F0EEE910A09236A417CB5DE254DBB6_StaticFields), 0 };
+const Il2CppTypeDefinitionSizes g_typeDefinitionSize7056 = { sizeof(CreateAnchors_tA07D067CF9EC4F138D659554565C2E39B8E3B087), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7057;
 const Il2CppTypeDefinitionSizes g_typeDefinitionSize7057 = { sizeof(U3CModuleU3E_tA271B12A1F3464DC77CE0F5DCAE0D74BD1C76BF2), -1, 0, 0 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize7058;

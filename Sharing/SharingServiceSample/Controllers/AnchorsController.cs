@@ -3,8 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SharingService.Data;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace SharingService.Controllers
@@ -25,13 +24,13 @@ namespace SharingService.Controllers
         }
 
         // GET api/anchors/5
-        [HttpGet("{anchorNumber}")]
-        public async Task<ActionResult<string>> GetAsync(long anchorNumber)
+        [HttpGet("?anchorId={anchorId}&userId={userId}")]
+        public async Task<ActionResult<string>> GetAsync(string anchorId, string userId)
         {
             // Get the key if present
             try
             {
-                return await this.anchorKeyCache.GetAnchorKeyAsync(anchorNumber);
+                return await this.anchorKeyCache.GetAnchorKeyAsync(anchorId, userId);
             }
             catch(KeyNotFoundException)
             {
@@ -54,36 +53,40 @@ namespace SharingService.Controllers
             return anchorKey;
         }
 
-        // POST api/anchors
-        [HttpPost]
-        public async Task<ActionResult<long>> PostAsync()
-        {
-            string anchorKey;
-            using (StreamReader reader = new StreamReader(this.Request.Body, Encoding.UTF8))
-            {
-                anchorKey = await reader.ReadToEndAsync();
-            }
+        // // POST api/anchors
+        // [HttpPost]
+        // public async Task<ActionResult<long>> PostAsync()
+        // {
+        //     string anchorKey;
+        //     using (StreamReader reader = new StreamReader(this.Request.Body, Encoding.UTF8))
+        //     {
+        //         anchorKey = await reader.ReadToEndAsync();
+        //     }
 
-            if (string.IsNullOrWhiteSpace(anchorKey))
-            {
-                return this.BadRequest();
-            }
+        //     if (string.IsNullOrWhiteSpace(anchorKey))
+        //     {
+        //         return this.BadRequest();
+        //     }
 
-            // Set the key and return the anchor number
-            return await this.anchorKeyCache.SetAnchorKeyAsync(anchorKey);
-        }
+        //     // Set the key and return the anchor number
+        //     return await this.anchorKeyCache.SetAnchorKeyAsync(anchorKey);
+        // }
 
         // POST api/anchors/key
-        [HttpPost("key")]
-        public async Task<ActionResult<long>> PostKeyAsync(string anchorKey)
+        [HttpPost("[action]")]
+        public async Task<ActionResult<string>> CreateAnchor([FromBody]AnchorMessage data)
         {
-            if (string.IsNullOrWhiteSpace(anchorKey))
+            string anchorKey = data.AnchorKey;
+            string anchorId = data.AnchorId;
+            string userId = data.UserId;
+
+            if (string.IsNullOrWhiteSpace(anchorKey) || string.IsNullOrWhiteSpace(anchorId) || string.IsNullOrWhiteSpace(userId))
             {
                 return this.BadRequest();
             }
 
             // Set the key and return the anchor number
-            return await this.anchorKeyCache.SetAnchorKeyAsync(anchorKey);
+            return await this.anchorKeyCache.SetAnchorKeyAsync(anchorKey, anchorId, userId);
         }
     }
 }

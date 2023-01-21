@@ -843,12 +843,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 294771741}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b05d7d02a6af8dd48aefdd862a1556e2, type: 3}
+  m_Script: {fileID: 11500000, guid: ba10b6e4dd23fd04f98f9c6c426c52a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arRaycastManager: {fileID: 0}
+  isErrorActive: 0
+  feedbackBox: {fileID: 0}
+  spawnedObject: {fileID: 0}
+  spawnedObjectMat: {fileID: 0}
+  enableAdvancingOnSelect: 1
   anchoredObjectPrefab: {fileID: 1147623660883556, guid: e593bfccf03b6444da88c7591f906ba8,
     type: 3}
   cloudManager: {fileID: 294771742}
+  _currentAppState: 0
+  _currentDemoFlow: 0
+  anchorsLocated: 0
+  anchorsExpected: 0
+  _anchorKeyToFind: 
   baseSharingUrl: 
 --- !u!1 &339971469
 GameObject:
