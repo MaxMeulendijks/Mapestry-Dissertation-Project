@@ -1,3 +1,4 @@
+using System;
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 // Comment out the next line to use CosmosDb instead of InMemory for the anchor cache.
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using SharingService.Data;
+using SharingService.Models;
 
 namespace SharingService
 {
@@ -31,7 +34,9 @@ namespace SharingService
 #if INMEMORY_DEMO
             services.AddSingleton<IAnchorKeyCache>(new MemoryAnchorCache());
 #else
-            services.AddSingleton<IAnchorKeyCache>(new CosmosDbCache(this.Configuration.GetValue<string>("StorageConnectionString")));
+            //services.AddSingleton<IAnchorKeyCache>(new CosmosDbCache(this.Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MapestryLink")));
+            services.AddScoped<MyDbContext>();
 #endif
 
             // Add an http client

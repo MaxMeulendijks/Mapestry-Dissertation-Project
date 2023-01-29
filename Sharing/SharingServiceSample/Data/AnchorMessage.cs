@@ -7,8 +7,19 @@ using System.Threading.Tasks;
 
 namespace SharingService.Data
 {
-    public class AnchorMessage
+    public class Anchor
     {
+        public Anchor(string anchorId, string userId, string anchorKey)
+        {
+            AnchorKey = anchorKey;
+            AnchorId = anchorId;
+            UserId = userId;
+        }
+
+        public Anchor()
+        {
+        }
+
         public string AnchorKey {get; set;}
         public string AnchorId {get; set;}
         public string UserId {get; set;}

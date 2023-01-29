@@ -290,14 +290,14 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             //     return;
             // }
 
-            // if (_currentDemoFlow == DemoFlow.CreateFlow)
-            // {
+            if (_currentDemoFlow == DemoFlow.CreateFlow)
+            {
                 await AdvanceCreateFlowDemoAsync();
-            // }
-            // else if (_currentDemoFlow == DemoFlow.LocateFlow)
-            // {
-            //     await AdvanceLocateFlowDemoAsync();
-            // }
+            }
+            else if (_currentDemoFlow == DemoFlow.LocateFlow)
+            {
+                await AdvanceLocateFlowDemoAsync();
+            }
         }
 
         public async Task InitializeCreateFlowDemoAsync()

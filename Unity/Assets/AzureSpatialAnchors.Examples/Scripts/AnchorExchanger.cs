@@ -60,7 +60,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             try
             {
                 HttpClient client = new HttpClient();
-                return await client.GetStringAsync(baseAddress + "/?anchorId=" + anchorId + "&userId="+userId);
+                return await client.GetStringAsync(baseAddress + "/find?anchorId=" + anchorId + "&userId="+userId);
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
 
         internal async Task<string> StoreAnchorKey(string anchorKey, string anchorId, string userId)
         {
-            if (string.IsNullOrWhiteSpace(anchorKey))
+            if (string.IsNullOrWhiteSpace(anchorKey) || string.IsNullOrWhiteSpace(anchorId) || string.IsNullOrWhiteSpace(userId))
             {
                 return "/";
             }
