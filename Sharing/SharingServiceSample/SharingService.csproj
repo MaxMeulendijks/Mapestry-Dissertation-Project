@@ -20,6 +20,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.*" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.6.2" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+    <None Include="wwwroot\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

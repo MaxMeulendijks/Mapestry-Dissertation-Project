@@ -1,0 +1,27 @@
+@model SharingService.ViewModels.Home;
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PlayFab JavaScript Unit Tests</title>
+        <script type="text/javascript" src="https://download.playfab.com/PlayFabClientApi.js"></script>
+        <script type="text/javascript" src="~/Javascript/SignIn.js"></script>
+    </head>
+    <body>
+        Mapestry<br />
+        Email Address: <input type="text" id="user-email"><br />
+        Username: <input type="text" id="user-name" hidden><br />
+        Password: <input type="text" id="user-password"><br />
+        <input type="button" id="login-button" value="Log In" onclick="LoginWithEmailAddress()"><br />
+        <input type="button" id="signup-button" hidden value="Sign Up" onclick="SignUpWithEmailAddress()"><br />
+        <input type="button" id="switch-button" value="No account? Sign up!" onclick="SwitchSignupLogin()">
+        <p type="text" id="resultOutput"></p>
+        <form asp-controller="Configuration" asp-action="StartUp" method="post">
+            <input asp-for="userId" hidden>
+            <input asp-for="sessionId" hidden>
+            <button id="submit-button" type='submit' hidden></button>
+        </form>
+    </body>
+    
+</html>

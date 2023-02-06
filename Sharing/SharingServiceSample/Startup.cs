@@ -29,6 +29,8 @@ namespace SharingService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             // Register the anchor key cache.
 #if INMEMORY_DEMO
@@ -43,7 +45,7 @@ namespace SharingService
             services.AddHttpClient<SpatialAnchorsTokenService>();
 
             // Register the Swagger services
-            services.AddSwaggerDocument(doc => doc.Title = $"{nameof(SharingService)} API");
+            //services.AddSwaggerDocument(doc => doc.Title = $"{nameof(SharingService)} API");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,20 +56,29 @@ namespace SharingService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             // Register the Swagger generator and the Swagger UI middlewares
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
+            //app.UseOpenApi();
+            //app.UseSwaggerUi3();
 
-            app.UseRewriter(
-                new RewriteOptions()
-                    .AddRedirect("^$","swagger")
-                );
+            // app.UseRewriter(
+            //     new RewriteOptions()
+            //         .AddRedirect("^$","swagger")
+            //     );
 
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute("Default", "{controller}/{action}",
+            new { controller = "Home", action = "Index"});
+                endpoints.MapControllerRoute("Login", "{controller}/{action}",
+            new { controller = "Home", action = "LogIn"});
+                endpoints.MapControllerRoute("Configuration", "{controller}/{action}",
+            new { controller = "Configuration", action = "StartUp"});
+                endpoints.MapRazorPages();
+            } );
         }
     }
 }

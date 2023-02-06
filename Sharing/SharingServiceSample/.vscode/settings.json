@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/89166269-24cf-4d4d-83d7-c687d5ef70c1/AppServices/subscriptions/89166269-24cf-4d4d-83d7-c687d5ef70c1/resourceGroups/myResourceGroup/providers/Microsoft.Web/sites/spatial-anchors-demo",
+    "appService.deploySubpath": "bin\\Publish"
+}
