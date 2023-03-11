@@ -1,0 +1,70 @@
+@model SharingService.ViewModels.UserConfiguration;
+
+
+<!-- The Modal -->
+<div class="modal" id="createHuntModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Create Hunt</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+    <form asp-controller="Configuration" asp-action="CreateHunt" type="submit">
+        <!-- Modal body -->
+        <div class="modal-body">
+                <input asp-for="@Model.NewHunt.HuntName"/>
+                <input asp-for="@Model.NewHunt.HuntDescription"/>
+                <input asp-for="@Model.NewHunt.IsPublic"/>
+                <input asp-for="@Model.NewHunt.UserName" hidden/>       
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            @* <button type="button" class="btn btn-primary" onclick="CreateHuntForm()">
+                Create Hunt
+            </button> *@
+            <button class="btn btn-primary" type="submit">
+                Create Hunt
+            </button> 
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                Close
+            </button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    function CreateHuntModal() {
+        var huntUserName = $("#User_UserName").val();
+        $("#NewHunt_UserName").val(huntUserName);
+    };
+
+    @* function CreateHuntForm() {
+        var HuntName = $("#createHuntName").val();
+        var HuntDescription = $("#createHuntDescription").val();
+        var IsHuntPublic = 0;
+        if($("#createIsHuntPublic").prop("checked")){
+            IsHuntPublic = 1;
+        }
+        var UserName = $("#User_UserName").val();
+
+        var hunt = {HuntName: HuntName, 
+                      HuntDescription: HuntDescription,
+                      IsPublic: IsHuntPublic,
+                      UserName: UserName};
+
+        $.ajax({
+            type: "POST",
+            url:"/Configuration/CreateHunt",
+            data: {hunt:hunt},
+            success: function(hunt){
+                $("#createHuntModal").modal('hide');
+            }
+        })
+    }; *@
+</script>

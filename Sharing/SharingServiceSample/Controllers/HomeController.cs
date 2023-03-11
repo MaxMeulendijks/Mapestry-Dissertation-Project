@@ -27,7 +27,7 @@ namespace SharingService.Controllers
         [HttpPost]
         public ActionResult LogIn(Home home)
         {
-                return RedirectToRoute("Configuration", home);
+                return RedirectToAction("StartUp", "Configuration", home);
         }
     }
 }

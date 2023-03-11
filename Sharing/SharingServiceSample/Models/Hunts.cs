@@ -15,10 +15,19 @@ namespace SharingService.Models
             PlayerHunts = new HashSet<PlayerHunts>();
         }
 
+        public Hunts(string huntName, string userName)
+        {
+            HuntName = huntName;
+            UserName = userName;
+            IsPublic = 0;
+            HuntDescription = "";
+            HuntAnchors = new HashSet<HuntAnchors>();
+        }
+
         public string HuntName { get; set; }
         public string UserName { get; set; }
         public string HuntDescription { get; set; }
-
+        public byte? IsPublic { get; set; }
         public virtual Users UserNameNavigation { get; set; }
         public virtual ICollection<HuntAnchors> HuntAnchors { get; set; }
         public virtual ICollection<PlayerHunts> PlayerHunts { get; set; }

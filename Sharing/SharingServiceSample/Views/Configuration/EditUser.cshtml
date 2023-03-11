@@ -1,0 +1,19 @@
+<script>
+    function EditDescription() {
+        var UserName = $("#User_UserName").val();
+        var UserDescription = $("#User_UserDescription").val();
+        var user =  {
+                        UserName: UserName, 
+                        UserDescription: UserDescription
+                    };
+
+        $.ajax({
+            type: "POST",
+            url:"/Configuration/EditUser",
+            data: {user:user},
+            success: function(user){
+                $("#User_UserDescription").val(user.userDescription);
+            }
+        })
+    };
+</script>

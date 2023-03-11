@@ -43,7 +43,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                         string currentKey = await RetrieveLastAnchorKey();
                         if (!string.IsNullOrWhiteSpace(currentKey) && currentKey != previousKey)
                         {
-                            Debug.Log("Found key " + currentKey);
+                            Debug.LogError("Found key " + currentKey);
                             lock (anchorkeys)
                             {
                                 anchorkeys.Add(currentKey);
@@ -60,6 +60,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             try
             {
                 HttpClient client = new HttpClient();
+                Debug.LogError("API call to find anchor: "+baseAddress + "/find?anchorId=" + anchorId + "&userId="+userId);
                 return await client.GetStringAsync(baseAddress + "/find?anchorId=" + anchorId + "&userId="+userId);
             }
             catch (Exception ex)
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             }
         }
 
-        internal async Task<string> StoreAnchorKey(string anchorKey, string anchorId, string userId)
+        internal async Task<string> StoreAnchorKey(string anchorKey, string anchorId, string userId, double latitude, double longitude)
         {
             if (string.IsNullOrWhiteSpace(anchorKey) || string.IsNullOrWhiteSpace(anchorId) || string.IsNullOrWhiteSpace(userId))
             {
@@ -93,7 +94,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             }
 
             Debug.LogError($"Failed to store for {anchorId}/{userId} the anchor key: {anchorKey}.");
-            AnchorMessage message = new AnchorMessage(anchorKey, anchorId, userId);
+            AnchorMessage message = new AnchorMessage(anchorKey, anchorId, userId, latitude, longitude);
 
             try
             {

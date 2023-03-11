@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a9c6491f-5382-49f3-aed7-74ee1911609f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/ConfigurationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/ConfigurationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/HuntAnchors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/HuntAnchors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Hunts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Hunts.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/MyDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/MyDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Users.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Users.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/UserConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/UserConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/Configuration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/Configuration.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuControls.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2M0F7lhmCbVxJMRqtkCPPLHSHYZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a9c6491f-5382-49f3-aed7-74ee1911609f" name="Changes" comment="" />
+      <created>1676896428129</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676896428129</updated>
+    </task>
+    <servers />
+  </component>
+</project>

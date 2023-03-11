@@ -6,24 +6,101 @@
     <meta charset="utf-8">
     <title>PlayFab JavaScript Unit Tests</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.js"></script>
     <script type="text/javascript" src="https://download.playfab.com/PlayFabClientApi.js"></script>
 </head>
 <body>
     <div class="container text-center">
-        <p>Welcome, @Model.User.UserName!</p>
-
-        <div class="row g-2">
-        @foreach (var anchor in @Model.UserAnchors)
-        {
-            <div class="col-4">
-                <div class="p-3 border bg-light">
-                    <p>Anchor Name: @anchor.AnchorName</p> 
-                    <p>Anchor Description: @anchor.AnchorDescription</p>
+        <div class="d-flex align-items-start">
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user" aria-selected="true">User Details</button>
+                <button class="nav-link" id="v-pills-anchors-tab" data-bs-toggle="pill" data-bs-target="#v-pills-anchors" type="button" role="tab" aria-controls="v-pills-anchors" aria-selected="false">Anchors</button>
+                <button class="nav-link" id="v-pills-hunts-tab" data-bs-toggle="pill" data-bs-target="#v-pills-hunts" type="button" role="tab" aria-controls="v-pills-hunts" aria-selected="false">Hunts</button>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab" tabindex="0">
+                    <label>User Name</label> 
+                    <input asp-for="@Model.User.UserName" readonly/> 
+                    <br/>
+                    
+                    <label>User Description</label>
+                    <input asp-for="@Model.User.UserDescription"/> 
+                    <br/>
+                    
+                    <button type="button" class="btn btn-primary" onclick="EditDescription()">
+                        Edit Description
+                    </button>
+                </div>
+                <div class="tab-pane fade" id="v-pills-anchors" role="tabpanel" aria-labelledby="v-pills-anchors-tab" tabindex="0">
+                    <div class="row g-2">
+                        @if(@Model.UserAnchors != null && @Model.UserAnchors.Count() != 0){
+                            @for (int i = 0; i < @Model.UserAnchors.Count(); i++)
+                            {
+                                <div class="col-4">
+                                    <div class="p-3 border bg-light">
+                                        <p>Anchor Name: <text id="AnchorName@(i)">@Model.UserAnchors[i].AnchorName</text></p> 
+                                        <p>Anchor Description: <text id="AnchorDescription@(i)">@Model.UserAnchors[i].AnchorDescription</text></p>
+                                        @if(@Model.UserAnchors[i].IsPublic == null || @Model.UserAnchors[i].IsPublic == 0){
+                                            <p id="isAnchorPublic@(i)">Private</p>
+                                        } else {
+                                            <p id="isAnchorPublic@(i)">Public</p>
+                                        }
+                                        <input id="AnchorUsername@(i)" type="text" value="@(Model.UserAnchors[i].UserName)" hidden/>
+                                        <button type="button" class="btn btn-primary" onclick="EditAnchorModal(@i)" data-bs-toggle="modal" data-bs-target="#editAnchorModal">
+                                            Edit Anchor
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        } else {
+                            <p>You do not yet have any anchors.</p>
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-pills-hunts" role="tabpanel" aria-labelledby="v-pills-hunts-tab" tabindex="0">
+                    <div id="AllHunts" class="row g-2">
+                        <button type="button" class="btn btn-primary" onclick="CreateHuntModal()" data-bs-toggle="modal" data-bs-target="#createHuntModal">
+                            Create Hunt
+                        </button>            
+                        @if(@Model.UserHunts != null && @Model.UserHunts.Count() != 0){
+                            @for (int i = 0; i < @Model.UserHunts.Count(); i++)
+                            {
+                                <div class="col-4">
+                                    <div class="p-3 border bg-light">
+                                        <p>Hunt Name: <text id="HuntName@(i)">@Model.UserHunts[i].HuntName</text></p> 
+                                        <p>Hunt Description: <text id="HuntDescription@(i)">@Model.UserHunts[i].HuntDescription</text></p>
+                                        @if(@Model.UserHunts[i].IsPublic == null || @Model.UserHunts[i].IsPublic == 0){
+                                            <p id="isHuntPublic@(i)">Private</p>
+                                        } else {
+                                            <p id="isHuntPublic@(i)">Public</p>
+                                        }
+                                        <input id="HuntUsername@(i)" type="text" value="@(Model.UserHunts[i].UserName)" hidden/>
+                                        <button type="button" class="btn btn-primary" onclick="EditHuntModal(@i)" data-bs-toggle="modal" data-bs-target="#editHuntModal">
+                                            Edit Hunt Info
+                                        </button>
+                                        <form asp-controller="Configuration" asp-action="ShowHunt" type="submit">
+                                            <input asp-for="@(Model.NewHunt.UserName)" value="@(Model.UserHunts[i].UserName)" hidden>
+                                            <input asp-for="@(Model.NewHunt.HuntName)" value="@(Model.UserHunts[i].HuntName)" hidden>
+                                            <button type="submit" class="btn btn-primary">
+                                                Edit Anchors
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        } else {
+                            <p>You do not yet have any hunts.</p>
+                        }
+                    </div>
                 </div>
             </div>
-        }
         </div>
+        
     </div>
+    <partial name="EditAnchor.cshtml"/>
+    <partial name="EditUser.cshtml"/>
+    <partial name="CreateHunt.cshtml" for="@(Model)"/>
+    <partial name="EditHunt.cshtml"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

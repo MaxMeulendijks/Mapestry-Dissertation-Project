@@ -8,10 +8,28 @@ using System.Collections.Generic;
 namespace SharingService.Models
 {
     public partial class Users
-    {
+    {   
+
+        public Users()
+        {
+            Anchors = new HashSet<Anchors>();
+            Hunts = new HashSet<Hunts>();
+            PlayerHunts = new HashSet<PlayerHunts>();
+        }
+
         public Users(string userName)
         {
             UserName = userName;
+
+            Anchors = new HashSet<Anchors>();
+            Hunts = new HashSet<Hunts>();
+            PlayerHunts = new HashSet<PlayerHunts>();
+        }
+
+        public Users(string userName, string userDescription)
+        {
+            UserName = userName;
+            UserDescription = userDescription;
 
             Anchors = new HashSet<Anchors>();
             Hunts = new HashSet<Hunts>();

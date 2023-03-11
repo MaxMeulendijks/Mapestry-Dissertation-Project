@@ -73,6 +73,8 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         private string _anchorKeyToFind = null;
         private string anchorInput = null;
         private string? _anchorNumberToFind;
+        private PlatformLocationProvider locationProvider = null;
+
         #endregion // Member Variables
 
         #region Unity Inspector Variables
@@ -201,7 +203,6 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         {
             base.Update();
 
-            Debug.LogWarning("spawnedObject");
             if (spawnedObjectMat != null)
             {
                 float rat = 0.1f;
@@ -266,9 +267,11 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             string anchorIdReturned = "/";
 
             localAnchorIds.Add(currentCloudAnchor.Identifier);
+            GeoLocation myLocation = locationProvider.GetLocationEstimate();
+            Debug.LogError("My location is at:"+myLocation.Latitude+","+myLocation.Longitude);
 
 #if !UNITY_EDITOR
-            anchorIdReturned = (await anchorExchanger.StoreAnchorKey(currentCloudAnchor.Identifier, anchorId, PlayFabControls.usernameGame));
+            anchorIdReturned = (await anchorExchanger.StoreAnchorKey(currentCloudAnchor.Identifier, anchorId, PlayFabControls.usernameGame, myLocation.Latitude, myLocation.Longitude));
 #endif
 
             AttachTextMesh(spawnedObject, anchorIdReturned);
@@ -402,6 +405,9 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     break;
                 case AppState.DemoStepStartSession:
                     await CloudManager.StartSessionAsync();
+                    locationProvider = new PlatformLocationProvider();
+                    CloudManager.Session.LocationProvider = locationProvider;
+                    ConfigureSensors();
                     currentAppState = AppState.DemoStepCreateLocalAnchor;
                     break;
                 case AppState.DemoStepCreateLocalAnchor:
@@ -427,6 +433,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     break;
                 case AppState.DemoStepStopSession:
                     CloudManager.StopSession();
+                    locationProvider = null;
                     CleanupSpawnedObjects();
                     await CloudManager.ResetSessionAsync();
                     currentAppState = AppState.DemoStepComplete;
@@ -458,6 +465,10 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     break;
                 case AppState.DemoStepStartSessionForQuery:
                     await CloudManager.StartSessionAsync();
+                    locationProvider = new PlatformLocationProvider();
+                    CloudManager.Session.LocationProvider = locationProvider;
+                    SensorPermissionHelper.RequestSensorPermissions();
+                    ConfigureSensors();
                     currentAppState = AppState.DemoStepLookForAnchor;
                     break;
                 case AppState.DemoStepLookForAnchor:
@@ -469,6 +480,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     break;
                 case AppState.DemoStepStopSessionForQuery:
                     CloudManager.StopSession();
+                    locationProvider = null;
                     currentAppState = AppState.DemoStepComplete;
                     break;
                 case AppState.DemoStepComplete:
@@ -559,6 +571,40 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             }
 
             otherSpawnedObjects.Clear();
+        }
+
+        private void ConfigureSensors()
+        {
+            locationProvider.Sensors.GeoLocationEnabled = SensorPermissionHelper.HasGeoLocationPermission();
+
+            locationProvider.Sensors.WifiEnabled = SensorPermissionHelper.HasWifiPermission();
+
+            locationProvider.Sensors.BluetoothEnabled = SensorPermissionHelper.HasBluetoothPermission();
+            locationProvider.Sensors.KnownBeaconProximityUuids = CoarseRelocSettings.KnownBluetoothProximityUuids;
+        }
+
+        public SensorStatus GeoLocationStatus
+        {
+            get
+            {
+                if (locationProvider == null)
+                    return SensorStatus.MissingSensorFingerprintProvider;
+                if (!locationProvider.Sensors.GeoLocationEnabled)
+                    return SensorStatus.DisabledCapability;
+                switch (locationProvider.GeoLocationStatus)
+                {
+                    case GeoLocationStatusResult.Available:
+                        return SensorStatus.Available;
+                    case GeoLocationStatusResult.DisabledCapability:
+                        return SensorStatus.DisabledCapability;
+                    case GeoLocationStatusResult.MissingSensorFingerprintProvider:
+                        return SensorStatus.MissingSensorFingerprintProvider;
+                    case GeoLocationStatusResult.NoGPSData:
+                        return SensorStatus.NoData;
+                    default:
+                        return SensorStatus.MissingSensorFingerprintProvider;
+                }
+            }
         }
 
         /// <summary>

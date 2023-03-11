@@ -1,0 +1,85 @@
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal" id="editAnchorModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Anchor</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+    <form asp-controller="Configuration" asp-action="EditAnchor" type="submit">
+        <!-- Modal body -->
+        <div class="modal-body">
+                <input id="editAnchorName" type="text" readonly/>
+                <input id="editAnchorDescription" type="text"/>
+                <input id="editIsPublic" type="checkbox"/>
+                <input id="editIterator" type="number" hidden/>            
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="EditAnchorForm()">
+                                            Edit Anchor
+                                        </button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    var listNumber;
+
+    function EditAnchorForm() {
+        var AnchorName = $("#editAnchorName").val();
+        var AnchorDescription = $("#editAnchorDescription").val();
+        var IsAnchorPublic = 0;
+        if($("#editIsAnchorPublic").prop("checked")){
+            IsAnchorPublic = 1;
+        }
+        var UserName = $("#User_UserName").val();
+        listNumber = $("#editIterator").val();
+
+        var anchor = {AnchorName: AnchorName, 
+                      AnchorDescription: AnchorDescription,
+                      IsPublic: IsAnchorPublic,
+                      UserName: UserName};
+
+        $.ajax({
+            type: "POST",
+            url:"/Configuration/EditAnchor",
+            data: {anchor:anchor},
+            success: function(anchor){
+                $("#editAnchorModal").modal('hide');
+                if(anchor.isPublic == null || anchor.isPublic == 0){
+                    $("#isAnchorPublic"+listNumber).text("Private");
+                } else {
+                    $("#isAnchorPublic"+listNumber).text("Public");
+                }
+                $("#AnchorDescription"+listNumber).text(anchor.anchorDescription);
+            }
+        })
+    };
+
+    function EditAnchorModal(listNumber) {
+        var anchorName = $("#AnchorName"+listNumber).text();
+        var anchorDescription = $("#AnchorDescription"+listNumber).text();
+        var isAnchorPublic = $("#isAnchorPublic"+listNumber).text();
+
+        if(isAnchorPublic == "Public"){
+            $("#editIsAnchorPublic").prop("checked", true);
+        } else {
+            $("#editIsAnchorPublic").prop("checked", false);
+        }
+            $("#editAnchorName").attr("readonly", false);
+            $("#editAnchorName").val(anchorName);
+            $("#editAnchorName").attr("readonly", true);
+            $("#editAnchorDescription").val(anchorDescription);
+            $("#editIterator").val(listNumber);
+    };
+</script>

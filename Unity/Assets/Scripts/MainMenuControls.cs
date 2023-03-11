@@ -1,25 +1,48 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
-public class MainMenuControls : MonoBehaviour
+
+namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
 {
 
-public TMP_Text menuUsername;
-public TMP_Text[] playfabValues;
+    public class MainMenuControls : MonoBehaviour
+    {
 
-void Start(){
+    public TMP_Text menuUsername;
 
-    menuUsername.text = "Welcome, " + PlayFabControls.usernameGame + "!";
+    void Start(){
 
-}
+        menuUsername.text = "Welcome, " + PlayFabControls.usernameGame + "!";
 
-public void CreateAnchors() {
+    }
 
-    SceneManager.LoadScene("CreateAnchors");
-}
+    public void CreateAnchors() {
 
+        SceneManager.LoadScene("CreateAnchors");
+    }
 
+    public async void MyLocation() {
+
+        bool successRetrieval = await HuntExchanger.GetHuntAnchors(HuntExchanger.pickedHunt);
+        if(successRetrieval)
+        {
+            SceneManager.LoadScene("Location-basedGame");
+        } 
+        else
+        {
+            Debug.LogError("Couldn't load anchors for hunt.");
+        }
+        
+    }
+
+    public void PlayHunt(){
+        
+    }
+
+    }
 }

@@ -59,6 +59,10 @@ namespace SharingService.Models
 
                 entity.Property(e => e.IsPublic).HasColumnName("is_public");
 
+                entity.Property(e => e.Latitude).HasColumnName("latitude").HasColumnType("decimal(10,8)");
+                
+                entity.Property(e => e.Longitude).HasColumnName("longitude").HasColumnType("decimal(11,8)");
+
                 entity.HasOne(d => d.UserNameNavigation)
                     .WithMany(p => p.Anchors)
                     .HasForeignKey(d => d.UserName)
@@ -69,10 +73,6 @@ namespace SharingService.Models
             modelBuilder.Entity<HuntAnchors>(entity =>
             {
                 entity.HasKey(e => new { e.HuntName, e.HuntCreatorId, e.AnchorName, e.AnchorCreatorId });
-
-                entity.HasIndex(e => e.YarnScriptName)
-                    .HasName("IX_HuntAnchors")
-                    .IsUnique();
 
                 entity.Property(e => e.HuntName)
                     .HasColumnName("hunt_name")
@@ -90,11 +90,11 @@ namespace SharingService.Models
                     .HasColumnName("anchor_creator_id")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.YarnScriptName)
-                    .IsRequired()
-                    .HasColumnName("yarn_script_name")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.YarnScript)
+                    .HasColumnName("yarn_script");
+
+                entity.Property(e => e.FirstStop)
+                    .HasColumnName("first_stop");
 
                 entity.HasOne(d => d.Anchor)
                     .WithMany(p => p.HuntAnchors)
@@ -124,6 +124,8 @@ namespace SharingService.Models
                 entity.Property(e => e.HuntDescription)
                     .HasColumnName("hunt_description")
                     .HasColumnType("text");
+
+                entity.Property(e => e.IsPublic).HasColumnName("is_public");
 
                 entity.HasOne(d => d.UserNameNavigation)
                     .WithMany(p => p.Hunts)

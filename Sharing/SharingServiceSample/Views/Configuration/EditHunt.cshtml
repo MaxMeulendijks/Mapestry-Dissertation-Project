@@ -1,0 +1,85 @@
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal" id="editHuntModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Hunt</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+    <form asp-controller="Configuration" asp-action="EditHunt" type="submit">
+        <!-- Modal body -->
+        <div class="modal-body">
+                <input id="editHuntName" type="text" readonly/>
+                <input id="editHuntDescription" type="text"/>
+                <input id="editIsHuntPublic" type="checkbox"/>
+                <input id="editHuntIterator" type="number" hidden/>            
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="EditHuntForm()">
+                                            Edit Hunt
+                                        </button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+    var listNumber;
+
+    function EditHuntForm() {
+        var HuntName = $("#editHuntName").val();
+        var HuntDescription = $("#editHuntDescription").val();
+        var IsHuntPublic = 0;
+        if($("#editIsHuntPublic").prop("checked")){
+            IsHuntPublic = 1;
+        }
+        var UserName = $("#User_UserName").val();
+        listNumber = $("#editHuntIterator").val();
+
+        var hunt = {HuntName: HuntName, 
+                      HuntDescription: HuntDescription,
+                      IsPublic: IsHuntPublic,
+                      UserName: UserName};
+
+        $.ajax({
+            type: "POST",
+            url:"/Configuration/EditHunt",
+            data: {hunt:hunt},
+            success: function(hunt){
+                $("#editHuntModal").modal('hide');
+                if(hunt.isPublic == null || hunt.isPublic == 0){
+                    $("#isHuntPublic"+listNumber).text("Private");
+                } else {
+                    $("#isHuntPublic"+listNumber).text("Public");
+                }
+                $("#HuntDescription"+listNumber).text(hunt.huntDescription);
+            }
+        })
+    };
+
+    function EditHuntModal(listNumber) {
+        var huntName = $("#HuntName"+listNumber).text();
+        var huntDescription = $("#HuntDescription"+listNumber).text();
+        var isHuntPublic = $("#isHuntPublic"+listNumber).text();
+
+        if(isHuntPublic == "Public"){
+            $("#editIsHuntPublic").prop("checked", true);
+        } else {
+            $("#editIsHuntPublic").prop("checked", false);
+        }
+            $("#editHuntName").attr("readonly", false);
+            $("#editHuntName").val(huntName);
+            $("#editHuntName").attr("readonly", true);
+            $("#editHuntDescription").val(huntDescription);
+            $("#editHuntIterator").val(listNumber);
+    };
+</script>
