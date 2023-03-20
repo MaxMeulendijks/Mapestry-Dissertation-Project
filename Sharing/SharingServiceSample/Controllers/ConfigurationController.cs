@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SharingService.Models;
 using SharingService.ViewModels;
@@ -198,28 +199,19 @@ namespace SharingService.Controllers
                 while (reader.Peek() >= 0)
                 {
                     string newLine = reader.ReadLine();
+                    logger.LogError("New Line: "+newLine);
                     string tabsAdded = "";
-                    if(newLine.StartsWith(" ")){
-
-                        foreach(var character in newLine)
-                        {
-                            if(character == ' ')
-                            {
-                                tabsAdded = tabsAdded +"\t";
-                            }
-                        }
-
-                        newLine = tabsAdded + newLine;
-                    }
 
                     result.AppendLine(newLine);
                     scriptToString = result.ToString();
                 }
             }
-            HuntAnchors scriptedAnchor = new HuntAnchors(config.newScript.HuntName, config.newScript.HuntCreatorId, config.newScript.AnchorName, config.newScript.HuntCreatorId);
+            HuntAnchors scriptedAnchor = dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(ha => ha.AnchorCreatorId == config.newScript.AnchorCreatorId && ha.AnchorName == config.newScript.AnchorName && ha.HuntName == config.newScript.HuntName && ha.HuntCreatorId == config.newScript.HuntCreatorId);
             scriptedAnchor.YarnScript = scriptToString;
             dbContext.HuntAnchors.Update(scriptedAnchor);
             dbContext.SaveChanges();
+
+            logger.LogError("Show text: "+ dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(ha => ha.AnchorCreatorId == config.newScript.AnchorCreatorId && ha.AnchorName == config.newScript.AnchorName && ha.HuntName == config.newScript.HuntName && ha.HuntCreatorId == config.newScript.HuntCreatorId).YarnScript);
         }
 
         [HttpGet("[action]")]

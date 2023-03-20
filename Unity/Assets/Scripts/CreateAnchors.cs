@@ -465,10 +465,6 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     break;
                 case AppState.DemoStepStartSessionForQuery:
                     await CloudManager.StartSessionAsync();
-                    locationProvider = new PlatformLocationProvider();
-                    CloudManager.Session.LocationProvider = locationProvider;
-                    SensorPermissionHelper.RequestSensorPermissions();
-                    ConfigureSensors();
                     currentAppState = AppState.DemoStepLookForAnchor;
                     break;
                 case AppState.DemoStepLookForAnchor:
@@ -555,10 +551,10 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             {
                 anchorsToFind.Add(_anchorKeyToFind);
             }
-            {
-                anchorsExpected = anchorsToFind.Count;
-                SetAnchorIdsToLocate(anchorsToFind);
-            }
+            
+            anchorsExpected = anchorsToFind.Count;
+            SetAnchorIdsToLocate(anchorsToFind);
+            
         }
 
         protected override void CleanupSpawnedObjects()

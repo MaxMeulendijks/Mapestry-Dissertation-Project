@@ -484,6 +484,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// <returns><see cref="GameObject"/>.</returns>
         protected virtual GameObject SpawnNewAnchoredObject(Vector3 worldPos, Quaternion worldRot)
         {
+
             // Create the prefab
             GameObject newGameObject = GameObject.Instantiate(AnchoredObjectPrefab, worldPos, worldRot);
 
@@ -509,6 +510,57 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         {
             // Create the object like usual
             GameObject newGameObject = SpawnNewAnchoredObject(worldPos, worldRot);
+
+            // If a cloud anchor is passed, apply it to the native anchor
+            if (cloudSpatialAnchor != null)
+            {
+                CloudNativeAnchor cloudNativeAnchor = newGameObject.GetComponent<CloudNativeAnchor>();
+                cloudNativeAnchor.CloudToNative(cloudSpatialAnchor);
+            }
+
+            // Set color
+            newGameObject.GetComponent<MeshRenderer>().material.color = GetStepColor();
+
+            // Return newly created object
+            return newGameObject;
+        }
+
+        /// <summary>
+        /// Spawns a new anchored object.
+        /// </summary>
+        /// <param name="worldPos">The world position.</param>
+        /// <param name="worldRot">The world rotation.</param>
+        /// <returns><see cref="GameObject"/>.</returns>
+        protected virtual GameObject SpawnNewAnchoredFindObject(Vector3 worldPos, Quaternion worldRot)
+        {
+            var anchorToFind = AnchoredObjectPrefab;
+            anchorToFind.transform.localScale = new Vector3(10, 10, 10);
+
+            // Create the prefab
+            GameObject newGameObject = GameObject.Instantiate(anchorToFind, worldPos, worldRot);
+
+            // Attach a cloud-native anchor behavior to help keep cloud
+            // and native anchors in sync.
+            newGameObject.AddComponent<CloudNativeAnchor>();
+
+            // Set the color
+            newGameObject.GetComponent<MeshRenderer>().material.color = GetStepColor();
+
+            // Return created object
+            return newGameObject;
+        }
+
+        /// <summary>
+        /// Spawns a new object.
+        /// </summary>
+        /// <param name="worldPos">The world position.</param>
+        /// <param name="worldRot">The world rotation.</param>
+        /// <param name="cloudSpatialAnchor">The cloud spatial anchor.</param>
+        /// <returns><see cref="GameObject"/>.</returns>
+        protected virtual GameObject SpawnNewAnchoredFindObject(Vector3 worldPos, Quaternion worldRot, CloudSpatialAnchor cloudSpatialAnchor)
+        {
+            // Create the object like usual
+            GameObject newGameObject = SpawnNewAnchoredFindObject(worldPos, worldRot);
 
             // If a cloud anchor is passed, apply it to the native anchor
             if (cloudSpatialAnchor != null)

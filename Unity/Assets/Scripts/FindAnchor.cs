@@ -1,480 +1,454 @@
-﻿// // Copyright (c) Microsoft Corporation. All rights reserved.
-// // Licensed under the MIT license.
-// using System;
-// using System.Collections.Generic;
-// using System.Threading.Tasks;
-// using UnityEngine;
-// using UnityEngine.UI;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+using System.Linq;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using System.Threading.Tasks;
+using TMPro;
+using Yarn.Unity;
 
-// namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
-// {
-//     public class FindAnchor : DemoScriptBase
-//     {
-//         internal enum AppState
-//         {
-//             DemoStepCreateSession = 0,
-//             DemoStepConfigSession,
-//             DemoStepStartSession,
-//             DemoStepCreateLocationProvider,
-//             DemoStepConfigureSensors,
-//             DemoStepCreateLocalAnchor,
-//             DemoStepSaveCloudAnchor,
-//             DemoStepSavingCloudAnchor,
-//             DemoStepStopSession,
-//             DemoStepDestroySession,
-//             DemoStepCreateSessionForQuery,
-//             DemoStepStartSessionForQuery,
-//             DemoStepLookForAnchorsNearDevice,
-//             DemoStepLookingForAnchorsNearDevice,
-//             DemoStepStopWatcher,
-//             DemoStepDeleteAnchors,
-//             DemoStepEnumerateAnchors,
-//             DemoStepStopSessionForQuery,
-//             DemoStepComplete
-//         }
+namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
+{
+    public class FindAnchor : DemoScriptBase
+    {
 
-//         private readonly Dictionary<AppState, DemoStepParams> stateParams = new Dictionary<AppState, DemoStepParams>
-//         {
-//             { AppState.DemoStepCreateSession,new DemoStepParams() { StepMessage = "Next: Create Azure Spatial Anchors Session", StepColor = Color.clear }},
-//             { AppState.DemoStepConfigSession,new DemoStepParams() { StepMessage = "Next: Configure Azure Spatial Anchors Session", StepColor = Color.clear }},
-//             { AppState.DemoStepStartSession,new DemoStepParams() { StepMessage = "Next: Start Azure Spatial Anchors Session", StepColor = Color.clear }},
-//             { AppState.DemoStepCreateLocationProvider,new DemoStepParams() { StepMessage = "Next: Create Location Provider", StepColor = Color.clear }},
-//             { AppState.DemoStepConfigureSensors,new DemoStepParams() { StepMessage = "Next: Configure Sensors", StepColor = Color.clear }},
-//             { AppState.DemoStepCreateLocalAnchor,new DemoStepParams() { StepMessage = "Tap a surface to add the Local Anchor.", StepColor = Color.blue }},
-//             { AppState.DemoStepSaveCloudAnchor,new DemoStepParams() { StepMessage = "Next: Save Local Anchor to cloud", StepColor = Color.yellow }},
-//             { AppState.DemoStepSavingCloudAnchor,new DemoStepParams() { StepMessage = "Saving local Anchor to cloud...", StepColor = Color.yellow }},
-//             { AppState.DemoStepStopSession,new DemoStepParams() { StepMessage = "Next: Stop Azure Spatial Anchors Session", StepColor = Color.green }},
-//             { AppState.DemoStepCreateSessionForQuery,new DemoStepParams() { StepMessage = "Next: Create Azure Spatial Anchors Session for query", StepColor = Color.clear }},
-//             { AppState.DemoStepStartSessionForQuery,new DemoStepParams() { StepMessage = "Next: Start Azure Spatial Anchors Session for query", StepColor = Color.clear }},
-//             { AppState.DemoStepLookForAnchorsNearDevice,new DemoStepParams() { StepMessage = "Next: Look for Anchors near device", StepColor = Color.clear }},
-//             { AppState.DemoStepLookingForAnchorsNearDevice,new DemoStepParams() { StepMessage = "Looking for Anchors near device...", StepColor = Color.clear }},
-//             { AppState.DemoStepStopWatcher,new DemoStepParams() { StepMessage = "Next: Stop Watcher", StepColor = Color.green }},
-//             { AppState.DemoStepDeleteAnchors,new DemoStepParams() { StepMessage = "Next: Delete Anchors", StepColor = Color.green }},
-//             { AppState.DemoStepEnumerateAnchors,new DemoStepParams() { StepMessage = "Next: Enumerate Anchors", StepColor = Color.green }},
-//             { AppState.DemoStepStopSessionForQuery,new DemoStepParams() { StepMessage = "Next: Stop Azure Spatial Anchors Session for query", StepColor = Color.grey }},
-//             { AppState.DemoStepComplete,new DemoStepParams() { StepMessage = "Next: Restart demo", StepColor = Color.clear }}
-//         };
+        #region Member Variables
+        private enum FindAnchorState {ConfirmReadiness, ConfigurationStarted, ConfigurationStopped, SearchStarted, SearchStopped, StartConversation};
+        private FindAnchorState _currentState = FindAnchorState.ConfirmReadiness;
+        private readonly List<string> localAnchorIds = new List<string>();
+        private string _anchorNumberToFind;
+        private PlatformLocationProvider locationProvider = null;
+        private List<GameObject> otherSpawnedObjects = new List<GameObject>();
+        [SerializeField]
+        public TextMeshProUGUI shownDialogue;
 
-//         private AppState _currentAppState = AppState.DemoStepCreateSession;
+        // The dialogue runner we want to load the program into
+        public DialogueRunner dialogueRunner;
+        public YarnProgramCreator programImporter;
 
-//         AppState currentAppState
-//         {
-//             get
-//             {
-//                 return _currentAppState;
-//             }
-//             set
-//             {
-//                 if (_currentAppState != value)
-//                 {
-//                     Debug.LogFormat("State from {0} to {1}", _currentAppState, value);
-//                     _currentAppState = value;
-//                     if (spawnedObjectMat != null)
-//                     {
-//                         spawnedObjectMat.color = stateParams[_currentAppState].StepColor;
-//                     }
+        #endregion // Member Variables
 
-//                     if (!isErrorActive)
-//                     {
-//                         feedbackBox.text = stateParams[_currentAppState].StepMessage;
-//                     }
-//                     EnableCorrectUIControls();
-//                 }
-//             }
-//         }
+        #region Unity Inspector Variables
+        [SerializeField]
+        [Tooltip("The base URL for the example sharing service.")]
+        private string baseSharingUrl = "";
+        #endregion // Unity Inspector Variables
 
-//         private PlatformLocationProvider locationProvider;
-//         private List<GameObject> allDiscoveredAnchors = new List<GameObject>();
+        public string shownDialogueText
+        {
+            get
+            {
+                return shownDialogue.text;
+            }
+            set
+            {
+                shownDialogue.text = value;
+            }
+        }
 
-//         private int nextButtonIndex = 0;
-//         private int enumerateButtonIndex = 2;
-//         private int deleteNewAnchorButtonIndex = 3;
-//         private int deleteAllAnchorsButtonIndex = 4;
+        private FindAnchorState currentState
+        {
+            get
+            {
+                return _currentState;
+            }
+            set
+            {
+                if (_currentState != value)
+                {
+                    Debug.LogFormat("State from {0} to {1}", _currentState, value);
+                    _currentState = value;
+                    if (spawnedObjectMat != null)
+                    {
+                        spawnedObjectMat.color = GetStepColor();
+                    }
+                    EnableCorrectUIControls();
+                }
+            }
+        }
 
-//         private void EnableCorrectUIControls()
-//         {
+        protected override void OnCloudAnchorLocated(AnchorLocatedEventArgs anchorLocatedInfo)
+        {
+            base.OnCloudAnchorLocated(anchorLocatedInfo);
 
-//             switch (currentAppState)
-//             {
-//                 case AppState.DemoStepCreateLocalAnchor:
-//                 case AppState.DemoStepSavingCloudAnchor:
-//                 case AppState.DemoStepLookingForAnchorsNearDevice:
-//                 #if WINDOWS_UWP || UNITY_WSA
-//                     // Sample disables "Next step" button on Hololens, so it doesn't overlay with placing the anchor and async operations, 
-//                     // which are not affected by user input.
-//                     // This is also part of a workaround for placing anchor interaction, which doesn't receive callback when air tapping for placement
-//                     // This is not applicable to Android/iOS versions.
-//                     XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].gameObject.SetActive(false);
-//                 #endif
-//                     break;
-//                 case AppState.DemoStepEnumerateAnchors:
-//                     XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].interactable = true;
-//                     XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].gameObject.SetActive(true);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].gameObject.SetActive(false);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].gameObject.SetActive(false);
-//                     break;
-//                 case AppState.DemoStepDeleteAnchors:
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].interactable = true;
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].interactable = true;
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].gameObject.SetActive(true);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].gameObject.SetActive(true);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].gameObject.SetActive(true);
-//                     break;
-//                 default:
-//                     XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].gameObject.SetActive(true);
-//                     XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].gameObject.SetActive(false);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].gameObject.SetActive(false);
-//                     XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].gameObject.SetActive(false);
-//                     break;
-//             }
-//         }
+            if (anchorLocatedInfo.Status == LocateAnchorStatus.Located)
+            {
+                UnityDispatcher.InvokeOnAppThread( () =>
+                {
+                    currentCloudAnchor = anchorLocatedInfo.Anchor;
 
-//         public SensorStatus GeoLocationStatus
-//         {
-//             get
-//             {
-//                 if (locationProvider == null)
-//                     return SensorStatus.MissingSensorFingerprintProvider;
-//                 if (!locationProvider.Sensors.GeoLocationEnabled)
-//                     return SensorStatus.DisabledCapability;
-//                 switch (locationProvider.GeoLocationStatus)
-//                 {
-//                     case GeoLocationStatusResult.Available:
-//                         return SensorStatus.Available;
-//                     case GeoLocationStatusResult.DisabledCapability:
-//                         return SensorStatus.DisabledCapability;
-//                     case GeoLocationStatusResult.MissingSensorFingerprintProvider:
-//                         return SensorStatus.MissingSensorFingerprintProvider;
-//                     case GeoLocationStatusResult.NoGPSData:
-//                         return SensorStatus.NoData;
-//                     default:
-//                         return SensorStatus.MissingSensorFingerprintProvider;
-//                 }
-//             }
-//         }
+                    Pose anchorPose = currentCloudAnchor.GetPose();
+                    GameObject foundAnchor = SpawnNewAnchoredFindObject(anchorPose.position, anchorPose.rotation, currentCloudAnchor);
+                    spawnedObjectMat = foundAnchor.GetComponent<MeshRenderer>().material;
 
-//         /// <summary>
-//         /// Start is called on the frame when a script is enabled just before any
-//         /// of the Update methods are called the first time.
-//         /// </summary>
-//         public override void Start()
-//         {
-//             Debug.Log(">>Azure Spatial Anchors Demo Script Start");
-
-//             base.Start();
-
-//             if (!SanityCheckAccessConfiguration())
-//             {
-//                 return;
-//             }
-//             feedbackBox.text = stateParams[currentAppState].StepMessage;
-
-//             Debug.Log("Azure Spatial Anchors Demo script started");
-
-//             enableAdvancingOnSelect = false;
-
-//             EnableCorrectUIControls();
-//         }
-
-//         protected override void OnCloudAnchorLocated(AnchorLocatedEventArgs args)
-//         {
-//             base.OnCloudAnchorLocated(args);
-
-//             if (args.Status == LocateAnchorStatus.Located)
-//             {
-//                 CloudSpatialAnchor cloudAnchor = args.Anchor;
-
-//                 UnityDispatcher.InvokeOnAppThread(() =>
-//                 {
-//                     currentAppState = AppState.DemoStepStopWatcher;
-//                     Pose anchorPose = cloudAnchor.GetPose();
-//                     GameObject spawnedObject = SpawnNewAnchoredObject(anchorPose.position, anchorPose.rotation, cloudAnchor);
-//                     allDiscoveredAnchors.Add(spawnedObject);
-//                 });
-//             }
-//         }
-
-//         public void OnApplicationFocus(bool focusStatus)
-//         {
-// #if UNITY_ANDROID
-//             // We may get additional permissions at runtime. Enable the sensors once app is resumed
-//             if (focusStatus && locationProvider != null)
-//             {
-//                 ConfigureSensors();
-//             }
-// #endif
-//         }
-
-//         /// <summary>
-//         /// Update is called every frame, if the MonoBehaviour is enabled.
-//         /// </summary>
-//         public override void Update()
-//         {
-//             base.Update();
-
-//             if (spawnedObjectMat != null)
-//             {
-//                 float rat = 0.1f;
-//                 float createProgress = 0f;
-//                 if (CloudManager.SessionStatus != null)
-//                 {
-//                     createProgress = CloudManager.SessionStatus.RecommendedForCreateProgress;
-//                 }
-//                 rat += (Mathf.Min(createProgress, 1) * 0.9f);
-//                 spawnedObjectMat.color = GetStepColor() * rat;
-//             }
-//         }
-
-//         protected override Color GetStepColor()
-//         {
-//             return stateParams[currentAppState].StepColor;
-//         }
-
-//         public async override Task AdvanceDemoAsync()
-//         {
-//             switch (currentAppState)
-//             {
-//                 case AppState.DemoStepCreateSession:
-//                     if (CloudManager.Session == null)
-//                     {
-//                         await CloudManager.CreateSessionAsync();
-//                     }
-//                     currentCloudAnchor = null;
-//                     currentAppState = AppState.DemoStepConfigSession;
-//                     break;
-//                 case AppState.DemoStepConfigSession:
-//                     ConfigureSession();
-//                     currentAppState = AppState.DemoStepStartSession;
-//                     break;
-//                 case AppState.DemoStepStartSession:
-//                     await CloudManager.StartSessionAsync();
-//                     currentAppState = AppState.DemoStepCreateLocationProvider;
-//                     break;
-//                 case AppState.DemoStepCreateLocationProvider:
-//                     locationProvider = new PlatformLocationProvider();
-//                     CloudManager.Session.LocationProvider = locationProvider;
-//                     currentAppState = AppState.DemoStepConfigureSensors;
-//                     break;
-//                 case AppState.DemoStepConfigureSensors:
-//                     SensorPermissionHelper.RequestSensorPermissions();
-//                     ConfigureSensors();
-//                     currentAppState = AppState.DemoStepCreateLocalAnchor;
-//                     // Enable advancing to next step on Air Tap, which is an easier interaction for placing the anchor.
-//                     // (placing the anchor with Air tap automatically advances the demo).
-//                     enableAdvancingOnSelect = true;
-//                     break;
-//                 case AppState.DemoStepCreateLocalAnchor:
-//                     if (spawnedObject != null)
-//                     {
-//                         currentAppState = AppState.DemoStepSaveCloudAnchor;
-//                     }
-//                     enableAdvancingOnSelect = false;
-//                     break;
-//                 case AppState.DemoStepStopSession:
-//                     CloudManager.StopSession();
-//                     CleanupSpawnedObjects();
-//                     await CloudManager.ResetSessionAsync();
-//                     locationProvider = null;
-//                     currentAppState = AppState.DemoStepCreateSessionForQuery;
-//                     break;
-//                 case AppState.DemoStepCreateSessionForQuery:
-//                     ConfigureSession();
-//                     locationProvider = new PlatformLocationProvider();
-//                     CloudManager.Session.LocationProvider = locationProvider;
-//                     ConfigureSensors();
-//                     currentAppState = AppState.DemoStepStartSessionForQuery;
-//                     break;
-//                 case AppState.DemoStepStartSessionForQuery:
-//                     await CloudManager.StartSessionAsync();
-//                     currentAppState = AppState.DemoStepLookForAnchorsNearDevice;
-//                     break;
-//                 case AppState.DemoStepLookForAnchorsNearDevice:
-//                     currentAppState = AppState.DemoStepLookingForAnchorsNearDevice;
-//                     currentWatcher = CreateWatcher();
-//                     break;
-//                 case AppState.DemoStepLookingForAnchorsNearDevice:
-//                     break;
-//                 case AppState.DemoStepStopWatcher:
-//                     if (currentWatcher != null)
-//                     {
-//                         currentWatcher.Stop();
-//                         currentWatcher = null;
-//                     }
-//                     currentAppState = AppState.DemoStepDeleteAnchors;
-//                     break;
-//                 case AppState.DemoStepDeleteAnchors:
-//                     currentAppState = AppState.DemoStepEnumerateAnchors;
-//                     break;
-//                 case AppState.DemoStepEnumerateAnchors:
-//                     currentAppState = AppState.DemoStepStopSessionForQuery;
-//                     break;
-//                 case AppState.DemoStepStopSessionForQuery:
-//                     CloudManager.StopSession();
-//                     currentWatcher = null;
-//                     locationProvider = null;
-//                     currentAppState = AppState.DemoStepComplete;
-//                     break;
-//                 case AppState.DemoStepComplete:
-//                     currentCloudAnchor = null;
-//                     currentAppState = AppState.DemoStepCreateSession;
-//                     CleanupSpawnedObjects();
-//                     break;
-//                 default:
-//                     Debug.Log("Shouldn't get here for app state " + currentAppState.ToString());
-//                     break;
-//             }
-//         }
-
-
-//         public void DeleteAllFoundAnchors()
-//         {
-//             feedbackBox.text = "Deleting all found anchors...";
-//             XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = false;
-//             bool deleteNewAnchorButtonPreviousState = XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].interactable;
-//             XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].interactable = false;
-//             XRUXPicker.Instance.GetDemoButtons()[deleteAllAnchorsButtonIndex].interactable = false;
-
-//             UnityDispatcher.InvokeOnAppThread(async () =>
-//             {
-//                 int deletedCount = 0;
-//                 foreach (GameObject anchor in allDiscoveredAnchors)
-//                 {
-//                     // Acquire the CloudSpatialAnchor
-//                     CloudNativeAnchor cloudNativeAnchor = anchor.GetComponent<CloudNativeAnchor>();
-//                     if (cloudNativeAnchor == null)
-//                     {
-//                         Debug.LogError("Found game object without CloudNativeAnchor");
-//                         continue;
-//                     }
-//                     if (cloudNativeAnchor.CloudAnchor == null)
-//                     {
-//                         Debug.LogError("Found CloudNativeAnchor without CloudSpatialAnchor");
-//                         continue;
-//                     }
-
-//                     // Delete from the service
-//                     await CloudManager.DeleteAnchorAsync(cloudNativeAnchor.CloudAnchor);
-
-//                     // Destroy the GameObject
-//                     Destroy(anchor);
-
-//                     // Check if this anchor was also the cuurentCloudAnchor
-//                     if (currentCloudAnchor != null && cloudNativeAnchor.CloudAnchor.Identifier == currentCloudAnchor.Identifier)
-//                     {
-//                         // Cleanup to prevent app from calling DeleteNewAnchor() after this
-//                         deleteNewAnchorButtonPreviousState = false;
-//                         currentCloudAnchor = null;
-//                     }
-
-//                     ++deletedCount;
-//                 }
-
-//                 allDiscoveredAnchors.Clear();
-
-//                 feedbackBox.text = $"Deleted {deletedCount} anchors";
-//                 XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = true;
-//                 XRUXPicker.Instance.GetDemoButtons()[deleteNewAnchorButtonIndex].interactable = deleteNewAnchorButtonPreviousState;
-//             });
-//         }
-
-//         public void EnumerateAllNearbyAnchors()
-//         {
-//             feedbackBox.text = "Enumerating nearby anchors...";
-//             XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = false;
-//             XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].interactable = false;
-
-//             UnityDispatcher.InvokeOnAppThread(async () =>
-//             {
-//                 NearDeviceCriteria criteria = new NearDeviceCriteria();
-//                 criteria.DistanceInMeters = 5;
-//                 criteria.MaxResultCount = 20;
-
-//                 IList<string> spatialAnchorIds = await CloudManager.Session.GetNearbyAnchorIdsAsync(criteria);
-
-//                 Debug.LogFormat("Got ids for {0} anchors", spatialAnchorIds.Count);
-
-//                 List<CloudSpatialAnchor> spatialAnchors = new List<CloudSpatialAnchor>();
-
-//                 foreach (string anchorId in spatialAnchorIds)
-//                 {
-//                     CloudSpatialAnchor anchor = await CloudManager.Session.GetAnchorPropertiesAsync(anchorId);
-//                     Debug.LogFormat("Received information about spatial anchor {0}", anchor.Identifier);
-//                     spatialAnchors.Add(anchor);
-//                 }
-
-//                 feedbackBox.text = $"Found {spatialAnchors.Count} anchors nearby";
-//                 XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = true;
-//                 XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].interactable = true;
-//             });
-//         }
-
-//         public void FindActiveAnchor()
-//         {
-
-//             string activeAnchorKey = "";
-
-//             foreach(HuntAnchor anchor in HuntExchanger.GetHuntAnchors())
-//             {
-//                 activeAnchorKey = anchor.Anchor.AnchorKey;
-//             }
-
-//             GeoCoordinate();
-
-//             XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = false;
-//             XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].interactable = false;
-
-//             UnityDispatcher.InvokeOnAppThread(async () =>
-//             {
-//                 NearDeviceCriteria criteria = new NearDeviceCriteria();
-//                 criteria.DistanceInMeters = 5;
-//                 criteria.MaxResultCount = 25;
-
-//                 IList<string> spatialAnchorIds = await CloudManager.Session.GetNearbyAnchorIdsAsync(criteria);
-
-//                 Debug.LogFormat("Got ids for {0} anchors", spatialAnchorIds.Count);
-
-//                 foreach (string anchorKeyFound in spatialAnchorIds)
-//                 {
-//                     if(anchorKeyFound == activeAnchorKey)
-//                     {
-//                         CloudSpatialAnchor anchor = await CloudManager.Session.GetAnchorPropertiesAsync(activeAnchorKey);
-//                         Debug.LogFormat("Received information about spatial anchor {0}", anchor.Identifier);
-//                         XRUXPicker.Instance.GetDemoButtons()[nextButtonIndex].interactable = true;
-//                         XRUXPicker.Instance.GetDemoButtons()[enumerateButtonIndex].interactable = true;
-//                     }
-//                 }
+                    AttachTextMesh(foundAnchor, "You've found "+HuntExchanger.anchorToFind.AnchorName);
                     
-                
-//             });
-        
-//         }
+                    currentState = FindAnchorState.SearchStopped;                 
+                });
+            }
+        }
 
-//         protected override void CleanupSpawnedObjects()
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before any
+        /// of the Update methods are called the first time.
+        /// </summary>
+        public override void Start()
+        {
+            base.Start();
+
+            Debug.LogWarning("Before any ifs");
+            if (!SanityCheckAccessConfiguration())
+            {
+                Debug.LogWarning("!SanityCheckAccessConfiguration");
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                return;
+            }
+
+            Debug.LogWarning("Before samples config");
+            SpatialAnchorSamplesConfig samplesConfig = Resources.Load<SpatialAnchorSamplesConfig>("SpatialAnchorSamplesConfig");
+            if (string.IsNullOrWhiteSpace(BaseSharingUrl) && samplesConfig != null)
+            {
+                BaseSharingUrl = samplesConfig.BaseSharingURL;
+            }
+
+            Debug.LogWarning("Before null and empty url");
+            if (string.IsNullOrEmpty(BaseSharingUrl))
+            {
+                feedbackBox.text = $"Need to set {nameof(BaseSharingUrl)}.";
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoInputField().gameObject.SetActive(false);
+                return;
+            }
+            else
+            {
+                Uri result;
+                if (!Uri.TryCreate(BaseSharingUrl, UriKind.Absolute, out result))
+                {
+                    feedbackBox.text = $"{nameof(BaseSharingUrl)} is not a valid url";
+                    return;
+                }
+                else
+                {
+                    BaseSharingUrl = $"{result.Scheme}://{result.Host}/api/anchors";
+                }
+            }
+            Debug.Log("Does it crash before Script is loaded?");
+            var scriptToLoad = programImporter.ImportYarn(HuntExchanger.anchorToFind.YarnScript, HuntExchanger.anchorToFind.AnchorName+"/"+HuntExchanger.anchorToFind.AnchorCreatorId);
+            Debug.Log("Script contents"+scriptToLoad.ToString());
+            Debug.Log("Does it crash after Script is loaded?");
+            dialogueRunner.Add(scriptToLoad);
+            Debug.Log("Does it crash after Script given to runner?");
+            EnableCorrectUIControls();
+        }
+
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+
+            if (spawnedObjectMat != null)
+            {
+                float rat = 0.1f;
+                float createProgress = 0f;
+                if (CloudManager.SessionStatus != null)
+                {
+                    createProgress = CloudManager.SessionStatus.RecommendedForCreateProgress;
+                }
+                rat += (Mathf.Min(createProgress, 1) * 0.9f);
+                spawnedObjectMat.color = GetStepColor();
+            }
+        }
+
+        protected override Color GetStepColor()
+        {
+            // if (currentCloudAnchor == null || localAnchorIds.Contains(currentCloudAnchor.Identifier))
+            // {
+            //     return stateParams[currentAppState].StepColor;
+            // }
+
+            return Color.red;
+        }
+#nullable enable
+        private void AttachTextMesh(GameObject parentObject, string? dataToAttach)
+        {
+#nullable disable
+            Debug.LogError("Attach text fails before object creation.");
+            GameObject go = new GameObject();
+            Debug.LogError("Attach text fails after object creation.");
+
+            TextMesh tm = go.AddComponent<TextMesh>();
+            Debug.LogError("Attach text fails after textmesh addition.");
+            if (dataToAttach == null)
+            {
+                Debug.LogError("Is dataToAttach null?");
+                tm.text = string.Format("{0}:{1}", localAnchorIds.Contains(currentCloudAnchor.Identifier) ? "L" : "R", currentCloudAnchor.Identifier);
+            }
+            else if (dataToAttach != "/")
+            {
+                Debug.LogError("Is dataToAttach not '/' ?");
+                tm.text = dataToAttach;
+            }
+            else
+            {
+                Debug.LogError("Is dataToAttach a '/' ?");
+                tm.text = $"Failed to find the anchor key'";
+            }
+            tm.fontSize = 32;
+            Debug.LogError("Before setting parent.");
+            go.transform.SetParent(parentObject.transform, false);
+            Debug.LogError("After setting parent.");
+            go.transform.localPosition = Vector3.one * 0.25f;
+            go.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+            go.transform.rotation = Quaternion.AngleAxis(180, Vector3.right);
+            go.transform.localScale = Vector3.one * .1f;
+            Debug.LogError("Before adding to list.");
+            otherSpawnedObjects.Add(go);
+            Debug.LogError("End of method.");
+        }
+
+// #nullable enable
+//         private void AttachTextBubble(GameObject parentObject, string? dataToAttach)
 //         {
-//             base.CleanupSpawnedObjects();
+// #nullable disable
+//             GameObject go = new GameObject();
 
-//             foreach (GameObject anchor in allDiscoveredAnchors)
+//             TextMesh tm = go.AddComponent<TextMesh>();
+//             if (dataToAttach == null)
 //             {
-//                 Destroy(anchor);
+//                 tm.text = string.Format("{0}:{1}", localAnchorIds.Contains(currentCloudAnchor.Identifier) ? "L" : "R", currentCloudAnchor.Identifier);
 //             }
-//             allDiscoveredAnchors.Clear();
+//             else if (dataToAttach != "/")
+//             {
+//                 tm.text = $"Anchor Number:{dataToAttach}";
+//             }
+//             else
+//             {
+//                 tm.text = $"Failed to find the anchor key'";
+//             }
+//             tm.fontSize = 32;
+//             go.transform.SetParent(parentObject.transform, false);
+//             go.transform.localPosition = Vector3.one * 0.25f;
+//             go.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+//             go.transform.rotation = Quaternion.AngleAxis(180, Vector3.right);
+//             go.transform.localScale = Vector3.one * .1f;
+
+//             otherSpawnedObjects.Add(go);
 //         }
 
-//         private void ConfigureSession()
-//         {
-//             const float distanceInMeters = 8.0f;
-//             const int maxAnchorsToFind = 25;
-//             SetNearDevice(distanceInMeters, maxAnchorsToFind);
-//         }
+#pragma warning disable CS1998 // Conditional compile statements are removing await
+        public async Task InitializeLocateFlowDemoAsync()
+#pragma warning restore CS1998
+        {
+                await AdvanceLocateFlowDemoAsync();
+        }
 
-//         private void ConfigureSensors()
-//         {
-//             locationProvider.Sensors.GeoLocationEnabled = SensorPermissionHelper.HasGeoLocationPermission();
+        /// <summary>
+        /// This version only exists for Unity to wire up a button click to.
+        /// If calling from code, please use the Async version above.
+        /// </summary>
+        public async void StartSearch()
+        {
+            try
+            {
+                    currentState = FindAnchorState.SearchStarted;
+                    await InitializeLocateFlowDemoAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{nameof(FindAnchor)} - Error in {nameof(StartSearch)}: {ex.Message}");
+            }
+        }
 
-//             locationProvider.Sensors.WifiEnabled = SensorPermissionHelper.HasWifiPermission();
+        /// <summary>
+        /// This version only exists for Unity to wire up a button click to.
+        /// If calling from code, please use the Async version above.
+        /// </summary>
+        public async void StartConfiguration()
+        {
+            try
+            {
+                    currentState = FindAnchorState.ConfigurationStarted;
+                    await InitializeLocateFlowDemoAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{nameof(FindAnchor)} - Error in {nameof(StartConfiguration)}: {ex.Message}");
+            }
+        }
 
-//             locationProvider.Sensors.BluetoothEnabled = SensorPermissionHelper.HasBluetoothPermission();
-//             locationProvider.Sensors.KnownBeaconProximityUuids = CoarseRelocSettings.KnownBluetoothProximityUuids;
-//         }
-//     }
-// }
+                /// <summary>
+        /// This version only exists for Unity to wire up a button click to.
+        /// If calling from code, please use the Async version above.
+        /// </summary>
+        public async void StartConversation()
+        {
+            try
+            {
+                    await AdvanceLocateFlowDemoAsync();
+                    EnableCorrectUIControls();
+                    await AdvanceLocateFlowDemoAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{nameof(FindAnchor)} - Error in {nameof(StartConversation)}: {ex.Message}");
+            }
+        }
+
+        private async Task AdvanceLocateFlowDemoAsync()
+        {
+            switch (currentState)
+            {
+                case FindAnchorState.ConfigurationStarted:
+                    currentCloudAnchor = null;
+                    Debug.Log("Does it crash before session configuration?");
+                    ConfigureSession();
+                    Debug.Log("Does it crash before session manager start?");
+                    await CloudManager.StartSessionAsync();
+                    Debug.Log("Does it crash before watcher is created?");
+                    currentState = FindAnchorState.ConfigurationStopped;
+                    break;
+                case FindAnchorState.SearchStarted:
+                    currentWatcher = CreateWatcher();
+                    break;
+                case FindAnchorState.SearchStopped:
+                    CloudManager.StopSession();
+                    locationProvider = null;
+                    currentCloudAnchor = null;
+                    currentWatcher = null;
+                    currentState = FindAnchorState.StartConversation;
+                    break;
+                case FindAnchorState.StartConversation:
+                    Debug.LogError("Before Dialogue started");
+                    dialogueRunner.StartDialogue("Start");
+                    Debug.LogError("After Dialogue started");
+                    break;
+                default:
+                    Debug.Log("Shouldn't get here for app state " + currentState);
+                    break;
+            }
+
+            EnableCorrectUIControls();
+        }
+
+        private void EnableCorrectUIControls()
+        {
+            
+            switch(currentState)
+            {
+                case FindAnchorState.ConfirmReadiness:
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(true);
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[2].gameObject.SetActive(false);
+                feedbackBox.text = "Ready to start?";
+                break;
+                case FindAnchorState.ConfigurationStarted:
+                MobileUX.Instance.GetDemoButtons()[0].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                MobileUX.Instance.GetDemoButtons()[2].gameObject.SetActive(false);
+                feedbackBox.text = "Configuring local...";
+                break;
+                case FindAnchorState.ConfigurationStopped:
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(true);
+                feedbackBox.text = "Start Search?";
+                break;
+                case FindAnchorState.SearchStarted:
+                MobileUX.Instance.GetDemoButtons()[1].gameObject.SetActive(false);
+                feedbackBox.text = "Searching for anchor...";
+                break;
+                case FindAnchorState.SearchStopped:
+                MobileUX.Instance.GetDemoButtons()[2].gameObject.SetActive(true);
+                feedbackBox.text = "Start conversation?";
+                break;
+                case FindAnchorState.StartConversation:
+                Debug.LogError("Entered StartConversation");
+                GameObject dialogue = GameObject.FindWithTag("Dialogue");
+                Debug.LogError("After dialogue created.");
+                dialogue.SetActive(true);
+                Debug.LogError("After dialogue activated.");
+                feedbackBox.text = " ";
+                Debug.LogError("After feedbackBox set to null.");
+                break;
+                default:
+                break;
+            }
+        }
+
+        private void ConfigureSession()
+        {
+            List<string> anchorsToFind = new List<string>();
+
+            if (currentState == FindAnchorState.ConfigurationStarted)
+            {
+                Debug.LogWarning("Anchor key added.");
+                anchorsToFind.Add(HuntExchanger.anchorToFind.Anchor.AnchorKey);
+                SetAnchorIdsToLocate(anchorsToFind);
+            }
+        }
+
+        private void ConfigureSensors()
+        {
+            locationProvider.Sensors.GeoLocationEnabled = SensorPermissionHelper.HasGeoLocationPermission();
+
+            locationProvider.Sensors.WifiEnabled = SensorPermissionHelper.HasWifiPermission();
+
+            locationProvider.Sensors.BluetoothEnabled = SensorPermissionHelper.HasBluetoothPermission();
+        }
+
+        protected override void CleanupSpawnedObjects()
+        {
+            base.CleanupSpawnedObjects();
+
+            for (int index = 0; index < otherSpawnedObjects.Count; index++)
+            {
+                Destroy(otherSpawnedObjects[index]);
+            }
+
+            otherSpawnedObjects.Clear();
+        }
+
+        protected override bool IsPlacingObject()
+        {
+            return false;
+        }
+
+        public async override Task AdvanceDemoAsync()
+        {
+            await InitializeLocateFlowDemoAsync();
+        }
+
+        public SensorStatus GeoLocationStatus
+        {
+            get
+            {
+                if (locationProvider == null)
+                    return SensorStatus.MissingSensorFingerprintProvider;
+                if (!locationProvider.Sensors.GeoLocationEnabled)
+                    return SensorStatus.DisabledCapability;
+                switch (locationProvider.GeoLocationStatus)
+                {
+                    case GeoLocationStatusResult.Available:
+                        return SensorStatus.Available;
+                    case GeoLocationStatusResult.DisabledCapability:
+                        return SensorStatus.DisabledCapability;
+                    case GeoLocationStatusResult.MissingSensorFingerprintProvider:
+                        return SensorStatus.MissingSensorFingerprintProvider;
+                    case GeoLocationStatusResult.NoGPSData:
+                        return SensorStatus.NoData;
+                    default:
+                        return SensorStatus.MissingSensorFingerprintProvider;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the base URL for the example sharing service.
+        /// </summary>
+        public string BaseSharingUrl { get => baseSharingUrl; set => baseSharingUrl = value; }
+    }
+}

@@ -61,7 +61,8 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                     Debug.LogError("Distance of anchors: "+anchorDistance+" meters.");
 				}
 
-				if(anchorDistance <= 8){
+				if(anchorDistance <= 15){
+                    HuntExchanger.anchorToFind = huntAnchor;
 					return true;
 				}
 			}
