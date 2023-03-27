@@ -18,9 +18,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         public static Hunt pickedHunt = new Hunt();
         public static List<HuntAnchor> huntAnchors = new List<HuntAnchor>();
         public static bool huntFound = false;
-        public static HuntAnchor anchorToFind = new HuntAnchor();
-
-
+        public static HuntAnchor foundAnchor = new HuntAnchor();
 
         public static List<Hunt> GetHunts()
         {

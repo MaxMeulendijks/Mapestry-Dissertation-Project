@@ -62,7 +62,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
 				}
 
 				if(anchorDistance <= 15){
-                    HuntExchanger.anchorToFind = huntAnchor;
+                    HuntExchanger.foundAnchor = huntAnchor;
 					return true;
 				}
 			}

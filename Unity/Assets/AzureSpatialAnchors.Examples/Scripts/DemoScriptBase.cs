@@ -19,9 +19,10 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         protected AnchorLocateCriteria anchorLocateCriteria = null;
         protected CloudSpatialAnchor currentCloudAnchor;
         protected CloudSpatialAnchorWatcher currentWatcher;
-        protected GameObject spawnedObject = null;
+        public GameObject spawnedObject = null;
         protected Material spawnedObjectMat = null;
         protected bool enableAdvancingOnSelect = true;
+        public XRCameraPicker cameraPicker = new XRCameraPicker();
         #endregion // Member Variables
 
         #region Unity Inspector Variables
@@ -76,6 +77,9 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         /// </summary>
         public override void Start()
         {
+            GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+            camera.SetActive(true);
+
             Debug.LogWarning("Before MobileUX");
             feedbackBox = MobileUX.Instance.GetFeedbackText();
             if (feedbackBox == null)
@@ -438,9 +442,6 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             // Get the cloud portion of the anchor
             CloudSpatialAnchor cloudAnchor = cna.CloudAnchor;
 
-            // In this sample app we delete the cloud anchor explicitly, but here we show how to set an anchor to expire automatically
-            cloudAnchor.Expiration = DateTimeOffset.Now.AddDays(7);
-
             while (!CloudManager.IsReadyForCreate)
             {
                 await Task.Delay(330);
@@ -561,7 +562,8 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         {
             // Create the object like usual
             GameObject newGameObject = SpawnNewAnchoredFindObject(worldPos, worldRot);
-
+            newGameObject.name = "foundAnchor";
+            
             // If a cloud anchor is passed, apply it to the native anchor
             if (cloudSpatialAnchor != null)
             {

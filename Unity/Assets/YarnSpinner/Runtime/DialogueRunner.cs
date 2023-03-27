@@ -1094,6 +1094,8 @@ namespace Yarn.Unity
     /// <seealso cref="DialogueUI"/>
     public abstract class DialogueUIBehaviour : MonoBehaviour
     {
+        public string characterName {get; set;}
+
         /// <summary>Signals that a conversation has started.</summary>
         public virtual void DialogueStarted()
         {

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 using TMPro;
 using Yarn.Unity;
+using UnityEngine.SceneManagement;
 
 namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
 {
@@ -21,13 +22,19 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
         private string _anchorNumberToFind;
         private PlatformLocationProvider locationProvider = null;
         private List<GameObject> otherSpawnedObjects = new List<GameObject>();
+        public Vector3 foundAnchorPosition = new Vector3(0,0,0);
+        public Quaternion foundAnchorRotation = new Quaternion();
+
         [SerializeField]
         public TextMeshProUGUI shownDialogue;
+        public GameObject textBubble;
 
         // The dialogue runner we want to load the program into
         public DialogueRunner dialogueRunner;
         public YarnProgramCreator programImporter;
-
+        public DialogueActions dialogueActions;
+        public GameObject cameraParent;
+        
         #endregion // Member Variables
 
         #region Unity Inspector Variables
@@ -81,13 +88,22 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
 
                     Pose anchorPose = currentCloudAnchor.GetPose();
                     GameObject foundAnchor = SpawnNewAnchoredFindObject(anchorPose.position, anchorPose.rotation, currentCloudAnchor);
+                    dialogueActions.actors.Add("anchor", foundAnchor);
                     spawnedObjectMat = foundAnchor.GetComponent<MeshRenderer>().material;
-
-                    AttachTextMesh(foundAnchor, "You've found "+HuntExchanger.anchorToFind.AnchorName);
+                    
+                    foundAnchorPosition = foundAnchor.transform.localPosition;
+                    foundAnchorRotation = foundAnchor.transform.localRotation;
+                    textBubble.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+                    dialogueActions.AttachTextBubble(foundAnchor);
                     
                     currentState = FindAnchorState.SearchStopped;                 
                 });
             }
+        }
+
+        void Awake()
+        {
+            dialogueActions.AddCommands();
         }
 
         /// <summary>
@@ -137,11 +153,12 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
                 }
             }
             Debug.Log("Does it crash before Script is loaded?");
-            var scriptToLoad = programImporter.ImportYarn(HuntExchanger.anchorToFind.YarnScript, HuntExchanger.anchorToFind.AnchorName+"/"+HuntExchanger.anchorToFind.AnchorCreatorId);
+            var scriptToLoad = programImporter.ImportYarn(HuntExchanger.foundAnchor.YarnScript, HuntExchanger.foundAnchor.AnchorName+"/"+HuntExchanger.foundAnchor.AnchorCreatorId);
             Debug.Log("Script contents"+scriptToLoad.ToString());
             Debug.Log("Does it crash after Script is loaded?");
             dialogueRunner.Add(scriptToLoad);
             Debug.Log("Does it crash after Script given to runner?");
+
             EnableCorrectUIControls();
         }
 
@@ -173,43 +190,6 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             // }
 
             return Color.red;
-        }
-#nullable enable
-        private void AttachTextMesh(GameObject parentObject, string? dataToAttach)
-        {
-#nullable disable
-            Debug.LogError("Attach text fails before object creation.");
-            GameObject go = new GameObject();
-            Debug.LogError("Attach text fails after object creation.");
-
-            TextMesh tm = go.AddComponent<TextMesh>();
-            Debug.LogError("Attach text fails after textmesh addition.");
-            if (dataToAttach == null)
-            {
-                Debug.LogError("Is dataToAttach null?");
-                tm.text = string.Format("{0}:{1}", localAnchorIds.Contains(currentCloudAnchor.Identifier) ? "L" : "R", currentCloudAnchor.Identifier);
-            }
-            else if (dataToAttach != "/")
-            {
-                Debug.LogError("Is dataToAttach not '/' ?");
-                tm.text = dataToAttach;
-            }
-            else
-            {
-                Debug.LogError("Is dataToAttach a '/' ?");
-                tm.text = $"Failed to find the anchor key'";
-            }
-            tm.fontSize = 32;
-            Debug.LogError("Before setting parent.");
-            go.transform.SetParent(parentObject.transform, false);
-            Debug.LogError("After setting parent.");
-            go.transform.localPosition = Vector3.one * 0.25f;
-            go.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-            go.transform.rotation = Quaternion.AngleAxis(180, Vector3.right);
-            go.transform.localScale = Vector3.one * .1f;
-            Debug.LogError("Before adding to list.");
-            otherSpawnedObjects.Add(go);
-            Debug.LogError("End of method.");
         }
 
 // #nullable enable
@@ -300,6 +280,22 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             }
         }
 
+        public void BackToMap()
+        {
+            try
+            {
+                GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+                camera.SetActive(false);
+                HuntExchanger.huntFound = false;
+                HuntExchanger.foundAnchor = null;
+                SceneManager.LoadScene("Location-basedGame");       
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"{nameof(FindAnchor)} - Error in {nameof(BackToMap)}: {ex.Message}");
+            }
+        }
+
         private async Task AdvanceLocateFlowDemoAsync()
         {
             switch (currentState)
@@ -386,7 +382,7 @@ namespace Microsoft.Azure.SpatialAnchors.Unity.Examples
             if (currentState == FindAnchorState.ConfigurationStarted)
             {
                 Debug.LogWarning("Anchor key added.");
-                anchorsToFind.Add(HuntExchanger.anchorToFind.Anchor.AnchorKey);
+                anchorsToFind.Add(HuntExchanger.foundAnchor.Anchor.AnchorKey);
                 SetAnchorIdsToLocate(anchorsToFind);
             }
         }

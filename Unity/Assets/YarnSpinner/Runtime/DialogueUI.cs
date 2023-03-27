@@ -1,3 +1,5 @@
+using System;
+using System.Runtime.CompilerServices;
 /*
 
 The MIT License (MIT)
@@ -273,12 +275,19 @@ namespace Yarn.Unity {
 
         /// Show a line of dialogue, gradually        
         private IEnumerator DoRunLine(Yarn.Line line, ILineLocalisationProvider localisationProvider, System.Action onComplete) {
-            onLineStart?.Invoke();
 
             userRequestedNextLine = false;
             
             // The final text we'll be showing for this line.
             string text = localisationProvider.GetLocalisedTextForLine(line);
+
+            //Retrieve the character's name.
+            characterName = text.Substring(0, text.IndexOf(':'));
+
+            //Retrieve the text without the name.
+            text = text.Substring(text.IndexOf(':') + 2);
+
+            onLineStart?.Invoke();
 
             if (text == null) {
                 Debug.LogWarning($"Line {line.ID} doesn't have any localised text.");
