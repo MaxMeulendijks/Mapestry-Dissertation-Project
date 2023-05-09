@@ -1,43 +1,9 @@
-# Azure Spatial Anchors Samples
+Mapestry
 
-Welcome to the Azure Spatial Anchors samples repository on GitHub. Azure Spatial Anchors is a managed cloud service and platform that enables multi-user, spatially aware mixed reality and augmented reality (MR/AR) apps for HoloLens, iOS devices with ARKit, and Android devices with ARCore. For more information, see [Azure Spatial Anchors documentation](https://docs.microsoft.com/azure/spatial-anchors/overview "Azure Spatial Anchors Documentation").
+Take the Title Id and Developer Secret key from your account on PlayFab.com, and place them in: Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
 
-## Create your first app
+Mapbox will add a separate section at the top in the UI. Click Mapbox > Setup. Login to your Mapbox account on Mapbox.com and generate an access token that can go in here.
 
-Follow the quickstart tutorials below to learn how to deploy the sample applications included in this repository. Note that both Git and [Git LFS](https://git-lfs.github.com/) are required to properly clone the repository.
+Create an Spatial Anchor resource in Azure, fetch your resource's ID & Key, as well as the domain, and place them in: Assets/AzureSpatialAnchors.SDK/Resources/SpatialAnchorConfig.asset
 
-[Android Java](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-android "Android Quickstart")
-
-[HoloLens C++](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-hololens "HoloLens C++ Quickstart")
-
-[iOS Swift/Objective-C](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-ios "iOS Quickstart")
-
-[Unity on Android](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-android "Unity Android Quickstart")
-
-[Unity on HoloLens](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-hololens "Unity HoloLens Quickstart")
-
-[Unity on iOS](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-unity-ios "Unity iOS Quickstart")
-
-[Xamarin on Android](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-xamarin-android "Xamarin Android Quickstart")
-
-[Xamarin on iOS](https://docs.microsoft.com/azure/spatial-anchors/quickstarts/get-started-xamarin-ios "Xamarin iOS Quickstart")
-
-## Enable sharing in MR/AR across sessions and devices
-
-[MR/AR sharing across devices and sessions](https://docs.microsoft.com/azure/spatial-anchors/tutorials/tutorial-use-cosmos-db-to-store-anchors "Sharing across sessions")
-
-## Key Concepts
-
-[Create and locate anchors](https://docs.microsoft.com/azure/spatial-anchors/concepts/create-locate-anchors-unity "Create/locate anchors")
-
-[Anchor Relationships](https://docs.microsoft.com/azure/spatial-anchors/concepts/anchor-relationships-way-finding "Anchor Relationships")
-
-[Experience Guidelines](https://docs.microsoft.com/en-us/azure/spatial-anchors/concepts/guidelines-effective-anchor-experiences "Experience Guidelines")
-
-[Frequently Asked Questions (FAQ)](https://docs.microsoft.com/azure/spatial-anchors/spatial-anchor-faq "FAQ")
-
-## Support
-
-Have an idea or suggestion? [Give us your feedback](https://feedback.azure.com/d365community/forum/f47d9b25-0725-ec11-b6e6-000d3a4f07b8 "Feedback")
-
-Have an issue? [Ask the community on Stack Overflow](https://stackoverflow.com/questions/tagged/azure-spatial-anchors "Stack Overflow") OR [Open a support ticket](https://docs.microsoft.com/azure/spatial-anchors/spatial-anchor-support "Support Ticket")
+In the Shared folder, there is a Connection String for a database. Create a database and place your URL in there.
