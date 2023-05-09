@@ -281,11 +281,11 @@ namespace Yarn.Unity {
             // The final text we'll be showing for this line.
             string text = localisationProvider.GetLocalisedTextForLine(line);
 
-            //Retrieve the character's name.
-            characterName = text.Substring(0, text.IndexOf(':'));
+                //Retrieve the character's name.
+                characterName = text.Substring(0, text.IndexOf(':'));
 
-            //Retrieve the text without the name.
-            text = text.Substring(text.IndexOf(':') + 2);
+                //Retrieve the text without the name.
+                text = text.Substring(text.IndexOf(':') + 2);
 
             onLineStart?.Invoke();
 

@@ -9,10 +9,14 @@ namespace SharingService.ViewModels
         public List<Anchors> UserAnchors {get; set;}
         public List<HuntAnchors> ScriptAnchors { get; set; }
         public List<string> WhoseAnchors { get; set; }
-        public Anchors newAnchor {get; set;}
-        public ViewHuntAnchors newScript {get; set;}
+        public OwnAnchors newOwnAnchor {get; set;}
+        public OtherAnchors newOtherAnchor {get; set;}
+        public ViewHuntAnchors updateAnchor {get; set;}
         public Hunts Hunt {get; set;}
-
+        #nullable enable
+        public string? ErrorMessage {get; set;}
+        public string? SuccessMessage {get; set;}
+        #nullable disable
         public HuntConfiguration(Hunts hunt, List<HuntAnchors> scriptAnchors, List<Anchors> userAnchors, List<string> whoseAnchors)
         {
             Hunt = hunt;

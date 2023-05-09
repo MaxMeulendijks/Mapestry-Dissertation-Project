@@ -1,0 +1,57 @@
+@model SharingService.ViewModels.HuntConfiguration;
+
+<div>
+    @if(@Model.WhoseAnchors != null && @Model.WhoseAnchors.Count() != 0){
+        @foreach (var option in Model.WhoseAnchors)
+        {
+            <input id="addType@(option)" name="WhoseAnchor" type="radio" value="@(option)"> @option <br/>
+        }
+    } 
+    else 
+    {
+        <p>WhoseAnchors = empty</p>
+    }
+    
+    <form id="addOtherAnchor" asp-controller="HuntConfiguration" asp-action="AddOtherHuntAnchor" type="submit">
+        <label>Anchor Name: </label><input asp-for="@(Model.newOtherAnchor.AnchorName)">
+        <label>User Name: </label><input asp-for="@(Model.newOtherAnchor.AnchorCreatorId)">
+        </br>
+        <span asp-validation-for="@(Model.newOtherAnchor.AnchorName)"></span>
+        <span asp-validation-for="@(Model.newOtherAnchor.AnchorCreatorId)"></span>
+        <button type="submit" class="btn btn-primary">
+            Add Anchor
+        </button>
+    </form>
+
+    <form id="addOwnAnchor" asp-controller="HuntConfiguration" asp-action="AddOwnHuntAnchor"  type="submit">
+            @if(@Model.UserAnchors != null && @Model.UserAnchors.Count() != 0){
+                <select asp-for="@(Model.newOwnAnchor.AnchorName)">
+                    @foreach(var anchor in Model.UserAnchors){
+                        <option value="@(anchor.AnchorName)">@anchor.AnchorName</option>
+                    }
+                </select>
+                <button type="submit" class="btn btn-primary">
+                    Add Anchor
+                </button>
+            } else {
+                <p>You do not yet have any anchors.</p>
+            }
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#addOtherAnchor").hide();
+        $("#addOwnAnchor").show();   
+    });
+
+    $("#addTypeMine").click(function(){
+            $("#addOtherAnchor").hide();
+            $("#addOwnAnchor").show();        
+    });
+
+    $("#addTypeOther").click(function(){
+        $("#addOtherAnchor").show();
+        $("#addOwnAnchor").hide();        
+    });
+</script>

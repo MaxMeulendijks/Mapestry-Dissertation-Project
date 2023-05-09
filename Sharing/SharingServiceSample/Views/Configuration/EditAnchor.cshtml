@@ -1,5 +1,4 @@
-<!-- Button to Open the Modal -->
-
+@model SharingService.ViewModels.UserConfiguration;
 
 <!-- The Modal -->
 <div class="modal" id="editAnchorModal">
@@ -14,10 +13,23 @@
     <form asp-controller="Configuration" asp-action="EditAnchor" type="submit">
         <!-- Modal body -->
         <div class="modal-body">
-                <input id="editAnchorName" type="text" readonly/>
-                <input id="editAnchorDescription" type="text"/>
-                <input id="editIsPublic" type="checkbox"/>
-                <input id="editIterator" type="number" hidden/>            
+            <div class="form-group">
+                <label asp-for="@Model.EditAnchor.AnchorName">Anchor Name: </label>
+                <input class="form-control" asp-for="@Model.EditAnchor.AnchorName" readonly/>
+                <span asp-validation-for="@Model.EditAnchor.AnchorName"></span>
+                </br>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.EditAnchor.AnchorDescription">Anchor Description: </label>
+                <textarea class="form-control" asp-for="@Model.EditAnchor.AnchorDescription"></textarea>
+                <span asp-validation-for="@Model.EditAnchor.AnchorDescription"></span>
+                </br>
+            </div>
+            <div class="form-group">
+                <label id="EditAnchor_IsPublicLabel">Is anchor public? </label>
+                <input id="EditAnchor_IsPublic" type="checkbox"/>
+                <input id="editIterator" type="number" hidden/>
+            </div>           
         </div>
 
         <!-- Modal footer -->
@@ -36,10 +48,10 @@
     var listNumber;
 
     function EditAnchorForm() {
-        var AnchorName = $("#editAnchorName").val();
-        var AnchorDescription = $("#editAnchorDescription").val();
+        var AnchorName = $("#EditAnchor_AnchorName").val();
+        var AnchorDescription = $("#EditAnchor_AnchorDescription").val();
         var IsAnchorPublic = 0;
-        if($("#editIsAnchorPublic").prop("checked")){
+        if($("#EditAnchor_IsPublic").prop("checked")){
             IsAnchorPublic = 1;
         }
         var UserName = $("#User_UserName").val();
@@ -72,14 +84,14 @@
         var isAnchorPublic = $("#isAnchorPublic"+listNumber).text();
 
         if(isAnchorPublic == "Public"){
-            $("#editIsAnchorPublic").prop("checked", true);
+            $("#EditAnchor_IsPublic").prop("checked", true);
         } else {
-            $("#editIsAnchorPublic").prop("checked", false);
+            $("#EditAnchor_IsPublic").prop("checked", false);
         }
-            $("#editAnchorName").attr("readonly", false);
-            $("#editAnchorName").val(anchorName);
-            $("#editAnchorName").attr("readonly", true);
-            $("#editAnchorDescription").val(anchorDescription);
+            $("#EditAnchor_AnchorName").attr("readonly", false);
+            $("#EditAnchor_AnchorName").val(anchorName);
+            $("#EditAnchor_AnchorName").attr("readonly", true);
+            $("#EditAnchor_AnchorDescription").val(anchorDescription);
             $("#editIterator").val(listNumber);
     };
 </script>

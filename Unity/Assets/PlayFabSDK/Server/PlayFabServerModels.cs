@@ -1990,6 +1990,13 @@ namespace PlayFab.ServerModels
         AnalysisSubscriptionFoundAlready,
         AnalysisSubscriptionManagementInvalidInput,
         InvalidGameCenterId,
+        InvalidNintendoSwitchAccountId,
+        EntityAPIKeysNotSupported,
+        IpAddressBanned,
+        EntityLineageBanned,
+        NamespaceMismatch,
+        InvalidServiceConfiguration,
+        InvalidNamespaceMismatch,
         MatchmakingEntityInvalid,
         MatchmakingPlayerAttributesInvalid,
         MatchmakingQueueNotFound,
@@ -2118,6 +2125,7 @@ namespace PlayFab.ServerModels
         AsyncExportNotInFlight,
         AsyncExportNotFound,
         AsyncExportRateLimitExceeded,
+        AnalyticsSegmentCountOverLimit,
         SnapshotNotFound,
         InventoryApiNotImplemented,
         LobbyDoesNotExist,
@@ -2136,6 +2144,12 @@ namespace PlayFab.ServerModels
         EventSamplingInvalidEventNamespace,
         EventSamplingInvalidEventName,
         EventSamplingRatioNotFound,
+        TelemetryKeyNotFound,
+        TelemetryKeyInvalidName,
+        TelemetryKeyAlreadyExists,
+        TelemetryKeyInvalid,
+        TelemetryKeyCountOverLimit,
+        TelemetryKeyDeactivated,
         EventSinkConnectionInvalid,
         EventSinkConnectionUnauthorized,
         EventSinkRegionInvalid,
@@ -2906,7 +2920,7 @@ namespace PlayFab.ServerModels
         public uint? MaxBatchSize;
         /// <summary>
         /// Number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
-        /// results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
+        /// results. Default is 300 (5 minutes). Maximum is 5,400 (90 minutes).
         /// </summary>
         public uint? SecondsToLive;
         /// <summary>
@@ -4095,6 +4109,32 @@ namespace PlayFab.ServerModels
     }
 
     [Serializable]
+    public class LinkSteamIdRequest : PlayFabRequestCommon
+    {
+        /// <summary>
+        /// The optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+        /// </summary>
+        public Dictionary<string,string> CustomTags;
+        /// <summary>
+        /// If another user is already linked to the account, unlink the other user and re-link.
+        /// </summary>
+        public bool? ForceLink;
+        /// <summary>
+        /// Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Xbox Live identifier.
+        /// </summary>
+        public string PlayFabId;
+        /// <summary>
+        /// Unique Steam identifier for a user.
+        /// </summary>
+        public string SteamId;
+    }
+
+    [Serializable]
+    public class LinkSteamIdResult : PlayFabResultCommon
+    {
+    }
+
+    [Serializable]
     public class LinkXboxAccountRequest : PlayFabRequestCommon
     {
         /// <summary>
@@ -4257,7 +4297,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public GetPlayerCombinedInfoRequestParams InfoRequestParameters;
         /// <summary>
-        /// Unique Steam identifier for a user
+        /// Unique Steam identifier for a user.
         /// </summary>
         public string SteamId;
     }
@@ -4288,7 +4328,7 @@ namespace PlayFab.ServerModels
         /// </summary>
         public string Sandbox;
         /// <summary>
-        /// Unique Xbox identifier for a user
+        /// Unique Xbox identifier for a user.
         /// </summary>
         public string XboxId;
     }
@@ -6224,6 +6264,24 @@ namespace PlayFab.ServerModels
 
     [Serializable]
     public class UnlinkServerCustomIdResult : PlayFabResultCommon
+    {
+    }
+
+    [Serializable]
+    public class UnlinkSteamIdRequest : PlayFabRequestCommon
+    {
+        /// <summary>
+        /// The optional custom tags associated with the request (e.g. build number, external trace identifiers, etc.).
+        /// </summary>
+        public Dictionary<string,string> CustomTags;
+        /// <summary>
+        /// Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam account.
+        /// </summary>
+        public string PlayFabId;
+    }
+
+    [Serializable]
+    public class UnlinkSteamIdResult : PlayFabResultCommon
     {
     }
 

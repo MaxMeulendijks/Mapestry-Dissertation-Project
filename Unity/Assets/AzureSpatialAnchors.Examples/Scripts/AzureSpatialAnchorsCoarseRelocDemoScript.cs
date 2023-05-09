@@ -1,5 +1,4 @@
-﻿// // Copyright (c) Microsoft Corporation. All rights reserved.
-// // Licensed under the MIT license.
+﻿
 // using System;
 // using System.Collections.Generic;
 // using System.Threading.Tasks;
@@ -537,12 +536,12 @@
 //             allDiscoveredAnchors.Clear();
 //         }
 
-//         private void ConfigureSession()
-//         {
-//             const float distanceInMeters = 8.0f;
-//             const int maxAnchorsToFind = 25;
-//             SetNearDevice(distanceInMeters, maxAnchorsToFind);
-//         }
+        // private void ConfigureSession()
+        // {
+        //     const float distanceInMeters = 8.0f;
+        //     const int maxAnchorsToFind = 25;
+        //     SetNearDevice(distanceInMeters, maxAnchorsToFind);
+        // }
 
 //         private void ConfigureSensors()
 //         {

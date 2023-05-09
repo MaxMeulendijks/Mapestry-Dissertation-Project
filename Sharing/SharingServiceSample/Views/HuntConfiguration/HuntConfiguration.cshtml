@@ -1,0 +1,108 @@
+@model SharingService.ViewModels.HuntConfiguration;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Configure your hunt</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="d-flex align-items-start">
+            <span>@Model.SuccessMessage</span>
+            <span>@Model.ErrorMessage</span>
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <button class="nav-link active" id="v-pills-Add-tab" data-bs-toggle="pill" data-bs-target="#v-pills-add" type="button" role="tab" aria-controls="v-pills-add" aria-selected="true">Add Anchors</button>
+                <button class="nav-link" id="v-pills-script-tab" data-bs-toggle="pill" data-bs-target="#v-pills-script" type="button" role="tab" aria-controls="v-pills-script" aria-selected="false">Script Anchors</button>
+                <button class="nav-link" id="v-pills-demo-tab" data-bs-toggle="pill" data-bs-target="#v-pills-demo" type="button" role="tab" aria-controls="v-pills-demo" aria-selected="false">Try Script</button>
+            </div>
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-add" role="tabpanel" aria-labelledby="v-pills-add-tab" tabindex="0">
+                    <partial name="AddHuntAnchor.cshtml" for="@(Model)"/>
+                </div>
+                <div class="tab-pane fade" id="v-pills-script" role="tabpanel" aria-labelledby="v-pills-script-tab" tabindex="0">
+                        @if(@Model.ScriptAnchors != null && @Model.ScriptAnchors.Count() != 0)
+                        {
+                            @for (int i = 0; i < @Model.ScriptAnchors.Count(); i++)
+                            {
+                                <div class="col-4">
+                                    <div class="p-3 border bg-light">
+                                        <p>Anchor Name: <text id="AnchorName@(i)">@Model.ScriptAnchors[i].AnchorName</text></p> 
+                                        <p>User Name: <text id="AnchorUsername@(i)">@Model.ScriptAnchors[i].AnchorCreatorId</text></p>
+                                        <br>
+                                            @if(@Model.ScriptAnchors[i].Active == 1)
+                                            {
+                                                <input id="SetActive@(i)" type="checkbox" onChange="SetActive(@(i))" checked/>
+                                            }
+                                            else
+                                            {
+                                                <input id="SetActive@(i)" type="checkbox" onChange="SetActive(@(i))"/>
+                                            }
+                                        <form asp-controller="HuntConfiguration" asp-action="ScriptHuntAnchor" enctype="multipart/form-data" type="submit">
+                                            <input asp-for="@(Model.updateAnchor.YarnScript)">
+                                            <span asp-validation-for="@(Model.updateAnchor.YarnScript)"></span>
+                                            <input asp-for="@(Model.updateAnchor.AnchorName)" value="@(Model.ScriptAnchors[i].AnchorName)" hidden>
+                                            <input asp-for="@(Model.updateAnchor.AnchorCreatorId)" value="@(Model.ScriptAnchors[i].AnchorCreatorId)" hidden>
+                                            <button type="submit" class="btn btn-primary">
+                                                Add Script
+                                            </button>
+                                        </form>
+                                        <br>
+                                        <asp>
+                                        <a href="https://spatial-anchors-demo.azurewebsites.net/HuntConfiguration/GetAnchorScript?anchorName=@(Model.ScriptAnchors[i].AnchorName)&anchorCreator=@(Model.ScriptAnchors[i].AnchorCreatorId)">
+                                            <button type="submit" class="btn btn-primary">
+                                                Get Script
+                                            </button>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                            }
+                        } 
+                        else 
+                        {
+                            <p>You do not yet have any anchors.</p>
+                        }
+                </div>
+                <div class="tab-pane fade" id="v-pills-demo" role="tabpanel" aria-labelledby="v-pills-demo-tab" tabindex="0">
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script>
+        function SetActive(listNumber){
+            var AnchorNamed = $("#AnchorName"+listNumber).text();
+            var AnchorCreator = $("#AnchorUsername"+listNumber).text();
+            var AnchorActive = false; 
+            if($("#SetActive"+listNumber).prop("checked"))
+            {
+                AnchorActive = true;
+            }
+
+            var updateAnchor = {AnchorName: AnchorNamed, 
+                              AnchorCreatorId: AnchorCreator,
+                              Active: AnchorActive};
+
+            $.ajax({
+                type: "POST",
+                url:"/HuntConfiguration/SetActive",
+                data: {updateAnchor:updateAnchor},
+                success: function(activeStatus){
+                    if(activeStatus == true){
+                        $("#AnchorActive"+listNumber).prop("checked", true);
+                    } else {
+                        $("#AnchorActive"+listNumber).prop("checked", false);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

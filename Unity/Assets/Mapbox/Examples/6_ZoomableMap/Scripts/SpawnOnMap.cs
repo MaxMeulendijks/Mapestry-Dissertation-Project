@@ -5,6 +5,7 @@
 	using Mapbox.Unity.Map;
 	using Mapbox.Unity.MeshGeneration.Factories;
 	using Mapbox.Unity.Utilities;
+	using MapestryExchangers;
 	using Microsoft.Azure.SpatialAnchors.Unity.Examples;
 	using GeoCoordinatePortable;
 	using System.Collections.Generic;
@@ -36,14 +37,12 @@
 		{
 			Debug.Log("Spawn on Map is called with this many anchors:"+HuntExchanger.huntAnchors.Count);
 			_locations = new Vector2d[HuntExchanger.huntAnchors.Count];
-			//_locations = new Vector2d[_locationStrings.Length];
 			_spawnedObjects = new List<GameObject>();
-			//for (int i = 0; i < _locationStrings.Length; i++)
 			for (int i = 0; i < HuntExchanger.huntAnchors.Count; i++)
 			{
 				var locationString = HuntExchanger.huntAnchors[i].Anchor.Latitude+", "+HuntExchanger.huntAnchors[i].Anchor.Longitude;
 				_locations[i] = Conversions.StringToLatLon(locationString);
-				var instance = Instantiate(HuntExchanger.huntAnchors[i].FirstStop ? _activeMarkerPrefab : _markerPrefab);
+				var instance = Instantiate(HuntExchanger.huntAnchors[i].Active ? _activeMarkerPrefab : _markerPrefab);
 				instance.transform.localPosition = _map.GeoToWorldPosition(_locations[i], true, 3);
 				instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 				_spawnedObjects.Add(instance);

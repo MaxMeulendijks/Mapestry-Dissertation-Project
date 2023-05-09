@@ -29,23 +29,21 @@ namespace SharingService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddControllersWithViews().AddSessionStateTempDataProvider();
             services.AddRazorPages();
 
-            // Register the anchor key cache.
-#if INMEMORY_DEMO
-            services.AddSingleton<IAnchorKeyCache>(new MemoryAnchorCache());
-#else
-            //services.AddSingleton<IAnchorKeyCache>(new CosmosDbCache(this.Configuration.GetValue<string>("StorageConnectionString")));
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MapestryLink")));
             services.AddScoped<MyDbContext>();
-#endif
 
             // Add an http client
             services.AddHttpClient<SpatialAnchorsTokenService>();
-
-            // Register the Swagger services
-            //services.AddSwaggerDocument(doc => doc.Title = $"{nameof(SharingService)} API");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,15 +57,7 @@ namespace SharingService
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
-
-            // Register the Swagger generator and the Swagger UI middlewares
-            //app.UseOpenApi();
-            //app.UseSwaggerUi3();
-
-            // app.UseRewriter(
-            //     new RewriteOptions()
-            //         .AddRedirect("^$","swagger")
-            //     );
+            app.UseSession();
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

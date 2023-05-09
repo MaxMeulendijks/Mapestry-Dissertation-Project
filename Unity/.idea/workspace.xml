@@ -1,20 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="a9c6491f-5382-49f3-aed7-74ee1911609f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/AnchorsController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/AppTokenController.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/ConfigurationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/ConfigurationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Controllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Data/IAnchorCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Data/IAnchorCache.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Anchors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Anchors.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/HuntAnchors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/HuntAnchors.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Hunts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Hunts.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/MyDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/MyDbContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Users.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/Users.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/ViewHuntAnchors.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Models/ViewHunts.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/SharingService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/SharingService.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/Home.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/Home.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/HuntConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/HuntConfiguration.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/UserConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/ViewModels/UserConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/AddHuntAnchor.cshtml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/Configuration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/Configuration.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenuControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenuControls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/CreateHunt.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/CreateHunt.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/EditHunt.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/EditHunt.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/EditUser.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/EditUser.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Configuration/HuntConfiguration.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/../Sharing/SharingServiceSample/Views/Home/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Resources/SpatialAnchorSamplesConfig.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Resources/SpatialAnchorSamplesConfig.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/CreateAnchors.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/CreateAnchors.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/FindAnchor.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/FindAnchor.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/SignUpLogin.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scenes/SignUpLogin.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scripts/AnchorExchanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scripts/AnchorExchanger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scripts/DemoScriptBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AzureSpatialAnchors.Examples/Scripts/DemoScriptBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DropdownHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DropdownHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HuntAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HuntAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HuntExchanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HuntExchanger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MapControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MapControls.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Mapbox/Examples/6_ZoomableMap/Scripts/SpawnOnMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Mapbox/Examples/6_ZoomableMap/Scripts/SpawnOnMap.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Admin/PlayFabAdminModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Client/PlayFabClientModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Economy/PlayFabEconomyModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Matchmaker/PlayFabMatchmakerAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Matchmaker/PlayFabMatchmakerAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Matchmaker/PlayFabMatchmakerInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Matchmaker/PlayFabMatchmakerInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Multiplayer/PlayFabMultiplayerModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Multiplayer/PlayFabMultiplayerModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Profiles/PlayFabProfilesModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerInstanceAPI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerInstanceAPI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerModels.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Server/PlayFabServerModels.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Internal/PlayFabErrors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Internal/PlayFabErrors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/PlayFabEvents.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/PlayFabEvents.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/PlayFabSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/PlayFabSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CreateAnchors.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CreateAnchors.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DialogueActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DialogueActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FindAnchor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FindAnchor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayFabControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayFabControls.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/YarnSpinner/Runtime/InMemoryVariableStorage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/YarnSpinner/Runtime/InMemoryVariableStorage.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +83,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2M0F7lhmCbVxJMRqtkCPPLHSHYZ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />

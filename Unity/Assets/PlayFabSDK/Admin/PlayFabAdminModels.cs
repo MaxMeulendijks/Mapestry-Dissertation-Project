@@ -2414,6 +2414,13 @@ namespace PlayFab.AdminModels
         AnalysisSubscriptionFoundAlready,
         AnalysisSubscriptionManagementInvalidInput,
         InvalidGameCenterId,
+        InvalidNintendoSwitchAccountId,
+        EntityAPIKeysNotSupported,
+        IpAddressBanned,
+        EntityLineageBanned,
+        NamespaceMismatch,
+        InvalidServiceConfiguration,
+        InvalidNamespaceMismatch,
         MatchmakingEntityInvalid,
         MatchmakingPlayerAttributesInvalid,
         MatchmakingQueueNotFound,
@@ -2542,6 +2549,7 @@ namespace PlayFab.AdminModels
         AsyncExportNotInFlight,
         AsyncExportNotFound,
         AsyncExportRateLimitExceeded,
+        AnalyticsSegmentCountOverLimit,
         SnapshotNotFound,
         InventoryApiNotImplemented,
         LobbyDoesNotExist,
@@ -2560,6 +2568,12 @@ namespace PlayFab.AdminModels
         EventSamplingInvalidEventNamespace,
         EventSamplingInvalidEventName,
         EventSamplingRatioNotFound,
+        TelemetryKeyNotFound,
+        TelemetryKeyInvalidName,
+        TelemetryKeyAlreadyExists,
+        TelemetryKeyInvalid,
+        TelemetryKeyCountOverLimit,
+        TelemetryKeyDeactivated,
         EventSinkConnectionInvalid,
         EventSinkConnectionUnauthorized,
         EventSinkRegionInvalid,
@@ -3028,7 +3042,7 @@ namespace PlayFab.AdminModels
         public uint? MaxBatchSize;
         /// <summary>
         /// Number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging
-        /// results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
+        /// results. Default is 300 (5 minutes). Maximum is 5,400 (90 minutes).
         /// </summary>
         public uint? SecondsToLive;
         /// <summary>

@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/AzureSpatialAnchors.Examples/Scenes/SignUpLogin.unity
+    path: Assets/Mapestry/Scenes/SignUpLogin.unity
     guid: ada6044d590c9f04f9a303a9bb267324
   - enabled: 1
-    path: Assets/AzureSpatialAnchors.Examples/Scenes/MainMenu.unity
+    path: Assets/Mapestry/Scenes/MainMenu.unity
     guid: 7cd7b90137d9bd44791365ea3549dcf1
   - enabled: 1
-    path: Assets/AzureSpatialAnchors.Examples/Scenes/CreateAnchors.unity
+    path: Assets/Mapestry/Scenes/CreateAnchors.unity
     guid: f83c3db2248c32d4fa65cec17c2ae6b2
   - enabled: 1
     path: Assets/Mapbox/Examples/0_PrefabScenes/Location-basedGame.unity
     guid: 42f6aa7ce7a604f16ade319663f46ceb
   - enabled: 1
-    path: Assets/AzureSpatialAnchors.Examples/Scenes/FindAnchor.unity
+    path: Assets/Mapestry/Scenes/FindAnchor.unity
     guid: 8ee2943c31662f64b9273be9c514562f
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 87f66def52a300f47a1b37fc6c22a91f,

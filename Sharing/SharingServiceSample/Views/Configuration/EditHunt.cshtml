@@ -1,5 +1,4 @@
-<!-- Button to Open the Modal -->
-
+@model SharingService.ViewModels.UserConfiguration;
 
 <!-- The Modal -->
 <div class="modal" id="editHuntModal">
@@ -14,10 +13,23 @@
     <form asp-controller="Configuration" asp-action="EditHunt" type="submit">
         <!-- Modal body -->
         <div class="modal-body">
-                <input id="editHuntName" type="text" readonly/>
-                <input id="editHuntDescription" type="text"/>
-                <input id="editIsHuntPublic" type="checkbox"/>
-                <input id="editHuntIterator" type="number" hidden/>            
+            <div class="form-group">
+                <label asp-for="@Model.EditHunt.HuntName">Hunt Name: </label>
+                <input class="form-control" asp-for="@Model.EditHunt.HuntName" readonly/>
+                <span asp-validation-for="@Model.EditHunt.HuntName"></span>
+                </br>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.EditHunt.HuntDescription">Hunt Description: </label>
+                <textarea class="form-control" asp-for="@Model.EditHunt.HuntDescription"></textarea>
+                <span asp-validation-for="@Model.EditHunt.HuntDescription"></span>
+                </br>
+            </div>
+            <div class="form-group">
+                <label id="EditHunt_IsPublicLabel">Is hunt public? </label>
+                <input id="EditHunt_IsPublic" type="checkbox"/>
+                <input id="editHuntIterator" type="number" hidden/>
+            </div>            
         </div>
 
         <!-- Modal footer -->
@@ -36,19 +48,17 @@
     var listNumber;
 
     function EditHuntForm() {
-        var HuntName = $("#editHuntName").val();
-        var HuntDescription = $("#editHuntDescription").val();
+        var HuntName = $("#EditHunt_HuntName").val();
+        var HuntDescription = $("#EditHunt_HuntDescription").val();
         var IsHuntPublic = 0;
-        if($("#editIsHuntPublic").prop("checked")){
+        if($("#EditHunt_IsPublic").prop("checked")){
             IsHuntPublic = 1;
         }
-        var UserName = $("#User_UserName").val();
         listNumber = $("#editHuntIterator").val();
 
         var hunt = {HuntName: HuntName, 
                       HuntDescription: HuntDescription,
-                      IsPublic: IsHuntPublic,
-                      UserName: UserName};
+                      IsPublic: IsHuntPublic};
 
         $.ajax({
             type: "POST",
@@ -72,14 +82,14 @@
         var isHuntPublic = $("#isHuntPublic"+listNumber).text();
 
         if(isHuntPublic == "Public"){
-            $("#editIsHuntPublic").prop("checked", true);
+            $("#EditHunt_IsPublic").prop("checked", true);
         } else {
-            $("#editIsHuntPublic").prop("checked", false);
+            $("#EditHunt_IsPublic").prop("checked", false);
         }
-            $("#editHuntName").attr("readonly", false);
-            $("#editHuntName").val(huntName);
-            $("#editHuntName").attr("readonly", true);
-            $("#editHuntDescription").val(huntDescription);
+            $("#EditHunt_HuntName").attr("readonly", false);
+            $("#EditHunt_HuntName").val(huntName);
+            $("#EditHunt_HuntName").attr("readonly", true);
+            $("#EditHunt_HuntDescription").val(huntDescription);
             $("#editHuntIterator").val(listNumber);
     };
 </script>

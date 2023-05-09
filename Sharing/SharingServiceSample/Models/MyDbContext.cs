@@ -38,24 +38,15 @@ namespace SharingService.Models
         {
             modelBuilder.Entity<Anchors>(entity =>
             {
-                entity.HasKey(e => new { e.AnchorName, e.UserName });
+                entity.HasKey(e => new { e.AnchorName, e.UserName }); //Maps model values to primary key
 
-                entity.Property(e => e.AnchorName)
-                    .HasColumnName("anchor_name")
-                    .HasMaxLength(50);
+                entity.Property(e => e.AnchorName).HasColumnName("anchor_name").HasMaxLength(50); //Maps value to column
 
-                entity.Property(e => e.UserName)
-                    .HasColumnName("user_name")
-                    .HasMaxLength(50);
+                entity.Property(e => e.UserName).HasColumnName("user_name").HasMaxLength(50);
 
-                entity.Property(e => e.AnchorDescription)
-                    .HasColumnName("anchor_description")
-                    .HasColumnType("text");
+                entity.Property(e => e.AnchorDescription).HasColumnName("anchor_description").HasColumnType("text");
 
-                entity.Property(e => e.AnchorKey)
-                    .IsRequired()
-                    .HasColumnName("anchor_key")
-                    .HasMaxLength(50);
+                entity.Property(e => e.AnchorKey).IsRequired().HasColumnName("anchor_key").HasMaxLength(50);
 
                 entity.Property(e => e.IsPublic).HasColumnName("is_public");
 
@@ -63,9 +54,8 @@ namespace SharingService.Models
                 
                 entity.Property(e => e.Longitude).HasColumnName("longitude").HasColumnType("decimal(11,8)");
 
-                entity.HasOne(d => d.UserNameNavigation)
-                    .WithMany(p => p.Anchors)
-                    .HasForeignKey(d => d.UserName)
+                entity.HasOne(d => d.UserNameNavigation).WithMany(p => p.Anchors) //Determines One to Many relation
+                    .HasForeignKey(d => d.UserName) //Maps foreign key relation
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Anchors_Users");
             });
@@ -93,8 +83,8 @@ namespace SharingService.Models
                 entity.Property(e => e.YarnScript)
                     .HasColumnName("yarn_script");
 
-                entity.Property(e => e.FirstStop)
-                    .HasColumnName("first_stop");
+                entity.Property(e => e.Active)
+                    .HasColumnName("active");
 
                 entity.HasOne(d => d.Anchor)
                     .WithMany(p => p.HuntAnchors)

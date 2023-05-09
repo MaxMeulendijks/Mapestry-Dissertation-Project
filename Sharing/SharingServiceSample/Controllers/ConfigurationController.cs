@@ -8,14 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using PlayFab;
+using PlayFab.ClientModels;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace SharingService.Controllers
 {
-    [Route("configuration")]
+    [Route("Configuration")]
     public class ConfigurationController : Controller
     {
         private readonly MyDbContext dbContext;
         private readonly ILogger logger;
+
+        //Values for session
+        public const string Username = "UserName";
+        public const string PlayFabSessionId = "PlayFabSessionId";
+        public const string Huntname = "HuntName";
+        public const string SavedConfiguration = "SavedConfiguration";
 
         public ConfigurationController(MyDbContext dbContext, ILogger<ConfigurationController> logger)
         {
@@ -23,60 +34,110 @@ namespace SharingService.Controllers
             this.logger = logger;
         }
 
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public ActionResult StartUp(Home home)
+        public JsonSerializerSettings UnloopSerializer()
         {
-            Users user = dbContext.Users.FirstOrDefault<Users>(u => u.UserName == home.userId);
-            logger.LogError("User ID = "+home.userId+" & Session ID = "+home.sessionId);
-            List<Anchors> userAnchors =  dbContext.Anchors.Where<Anchors>(a => a.UserName == home.userId).ToList<Anchors>();
-            List<Hunts> userHunts = dbContext.Hunts.Where<Hunts>(h => h.UserName == home.userId).ToList<Hunts>();
-            UserConfiguration userConfiguration = new UserConfiguration(user, userAnchors, userHunts);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
+
+            return settings;
+        }
+
+        [HttpGet("[action]")]
+        [AllowAnonymous]
+        public async Task<ActionResult> StartUp()
+        {
+            await HttpContext.Session.LoadAsync();
+            var UserName = HttpContext.Session.GetString(Username);
+            var SessionId = HttpContext.Session.GetString(PlayFabSessionId);
+
+            UserConfiguration userConfiguration;
+            if(HttpContext.Session.GetString(SavedConfiguration) == null)
+            {
+                Users user = dbContext.Users.Include(u => u.Anchors).Include(u => u.Hunts).FirstOrDefault<Users>(u => u.UserName == UserName);
+                logger.LogError("User ID = "+UserName+" & Session ID = "+SessionId);
+                
+                List<Anchors> userAnchors = new List<Anchors>();
+                List<Hunts> userHunts = new List<Hunts>();
+                
+                if(user != null)
+                {
+                    userAnchors =  user.Anchors.ToList<Anchors>();
+                    userHunts = user.Hunts.ToList<Hunts>();
+                }
+                else
+                {
+                    user = new Users(UserName);
+                }
+                
+
+                userConfiguration = new UserConfiguration(user, userAnchors, userHunts);
+                userConfiguration.UserName = UserName;
+                userConfiguration.PlayFabSessionId = SessionId;
+
+                string savedConfiguration = JsonConvert.SerializeObject(userConfiguration, UnloopSerializer());
+                HttpContext.Session.SetString(SavedConfiguration, savedConfiguration);
+            }
+            else
+            {
+                userConfiguration = JsonConvert.DeserializeObject<UserConfiguration>(HttpContext.Session.GetString(SavedConfiguration), UnloopSerializer());
+            }
 
             return View("Configuration", userConfiguration);
         }
 
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public Anchors EditAnchor(Anchors anchor)
+        public async Task<Anchors> EditAnchor(Anchors anchor) //Anchor changed on the front end
         {
-            Anchors anchorFound = dbContext.Anchors.FirstOrDefault<Anchors>(a => a.AnchorName == anchor.AnchorName && a.UserName == anchor.UserName);
-            logger.LogError("username = "+anchorFound.UserName+" & anchor name = "+anchorFound.AnchorName+" & anchor key = " +anchorFound.AnchorKey);
-            if(anchorFound != null){
-                anchorFound.AnchorDescription = anchor.AnchorDescription;
-                anchorFound.IsPublic = anchor.IsPublic;
+            await HttpContext.Session.LoadAsync(); //Load the session
+            var UserName = HttpContext.Session.GetString(Username); //Retrieve username
 
-                dbContext.Anchors.Update(anchorFound);
-                dbContext.SaveChanges();
-            } else {
-                anchorFound = anchor;
+            //Find Anchor
+            Anchors anchorFound = dbContext.Anchors.FirstOrDefault<Anchors>(a => a.AnchorName == anchor.AnchorName //Where anchorname matches input
+                                                                                && a.UserName == UserName); //Where username matched log-in username
+
+            if(anchorFound != null){
+                anchorFound.AnchorDescription = anchor.AnchorDescription; //Anchor description modified to match front end info.
+                anchorFound.IsPublic = anchor.IsPublic; //Public status modified to match front end info
+
+                dbContext.Anchors.Update(anchorFound); //Update database session
+                dbContext.SaveChanges(); //Update actual database
             }
 
-            return anchorFound;
+            return anchorFound; //return info
         }
 
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public Users EditUser(Users user)
+        public async Task<Users> EditUser(Users user)
         {
-            Users userFound = dbContext.Users.FirstOrDefault<Users>(u => u.UserName == user.UserName);
+            await HttpContext.Session.LoadAsync();
+            var UserName = HttpContext.Session.GetString(Username);
+            logger.LogError("Username exists: "+UserName);
+
+            Users userFound = dbContext.Users.FirstOrDefault<Users>(u => u.UserName == UserName);
             if(userFound != null){
+                logger.LogError("User found!");
                 userFound.UserDescription = user.UserDescription;
-
                 dbContext.Users.Update(userFound);
-                dbContext.SaveChanges();
             } else {
-                userFound = user;
+                logger.LogError("User not found!");
+                dbContext.Users.Add(new Users(UserName, user.UserDescription));
             }
-
+            dbContext.SaveChanges();
+            logger.LogError("Get to the end! With userfound: "+userFound.UserName +"/"+userFound.UserDescription);
             return userFound;
         }
 
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public Hunts EditHunt(Hunts hunt)
+        public async Task<Hunts> EditHunt(Hunts hunt)
         {
-            Hunts huntFound = dbContext.Hunts.FirstOrDefault<Hunts>(h => h.UserName == hunt.UserName && h.HuntName == hunt.HuntName);
+            await HttpContext.Session.LoadAsync();
+            var UserName = HttpContext.Session.GetString(Username);
+            Hunts huntFound = dbContext.Hunts.FirstOrDefault<Hunts>(h => h.UserName == UserName && h.HuntName == hunt.HuntName);
             if(huntFound != null){
                 huntFound.HuntDescription = hunt.HuntDescription;
 
@@ -91,150 +152,35 @@ namespace SharingService.Controllers
 
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public ActionResult CreateHunt(UserConfiguration hunt)
+        public async Task<ActionResult> CreateHunt(ViewHunts newHunt)
         {
-            logger.LogError("Hunt name = "+hunt.NewHunt.HuntName+"User name - "+hunt.NewHunt.UserName);
-            Hunts newHunt = new Hunts(hunt.NewHunt.HuntName, hunt.NewHunt.UserName);
-            newHunt.HuntDescription = hunt.NewHunt.HuntDescription;
-            newHunt.IsPublic = (hunt.NewHunt.IsPublic == true ? (byte) 1 : (byte) 0);
-
-            dbContext.Hunts.Add(newHunt);
-            dbContext.SaveChanges();
-
-            return ConfigureHunt(newHunt);
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public ActionResult ShowHunt(UserConfiguration hunt)
-        {
-            Hunts newHunt = new Hunts(hunt.NewHunt.HuntName, hunt.NewHunt.UserName);
-            return ConfigureHunt(newHunt);
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public ActionResult  ConfigureHunt(Hunts hunt){
-
-            HuntConfiguration huntAnchors = new HuntConfiguration(
-                                                                hunt,
-                                                                dbContext.HuntAnchors.Where<HuntAnchors>(ha => ha.HuntName == hunt.HuntName 
-                                                                                                        && ha.HuntCreatorId == hunt.UserName)
-                                                                .ToList(),
-                                                                dbContext.Anchors.Where<Anchors>(a => a.UserName == hunt.UserName)
-                                                                .ToList(),
-                                                                new List<string>{"Mine", "Other"}
-                                                                );
-
-            return View("HuntConfiguration", huntAnchors);
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public HuntAnchors EditHuntAnchors(HuntAnchors huntAnchor)
-        {
-            HuntAnchors huntAnchorFound = dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(
-                                                                                                ha => ha.HuntName == huntAnchor.HuntName 
-                                                                                                && ha.HuntCreatorId == huntAnchor.HuntCreatorId
-                                                                                                && ha.AnchorName == huntAnchor.AnchorName
-                                                                                                && ha.AnchorCreatorId == huntAnchor.AnchorCreatorId
-                                                                                            );
-            if(huntAnchor != null){
-                dbContext.HuntAnchors.Update(huntAnchorFound);
-                dbContext.SaveChanges();
-            } else {
-                huntAnchorFound = huntAnchor;
-            }
-
-            return huntAnchorFound;
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public ActionResult  AddHuntAnchor(HuntConfiguration config){
-
-            logger.LogError("Username = "+config.Hunt.UserName+" Hunt name = "+config.Hunt.HuntName+" Anchor name = "+config.newAnchor.AnchorName);
-            Anchors anchorFound = new Anchors();
-            if(config.newAnchor != null && config.newAnchor.AnchorName != null && config.newAnchor.UserName != null){
-                if(config.newAnchor.UserName == config.Hunt.UserName){
-                    anchorFound = dbContext.Anchors.FirstOrDefault<Anchors>(
-                                                                                a => a.AnchorName == config.newAnchor.AnchorName
-                                                                                && a.UserName == config.newAnchor.UserName
-                                                                            );
-                } else {
-                    anchorFound = dbContext.Anchors.FirstOrDefault<Anchors>(
-                                                                                a => a.AnchorName == config.newAnchor.AnchorName
-                                                                                && a.UserName == config.newAnchor.UserName
-                                                                                && a.IsPublic == 1
-                                                                            );
-                }
-
-                if(anchorFound != null){
-                    dbContext.HuntAnchors.Add(new HuntAnchors(config.Hunt.HuntName, config.Hunt.UserName, anchorFound.AnchorName, anchorFound.UserName));
-                    dbContext.SaveChanges();   
-                }       
-            }
-
-            HuntConfiguration newConfig = new HuntConfiguration(
-                                                                config.Hunt,
-                                                                dbContext.HuntAnchors.Where<HuntAnchors>(ha => ha.HuntName == config.Hunt.HuntName 
-                                                                                                        && ha.HuntCreatorId == config.Hunt.UserName)
-                                                                .ToList(),
-                                                                dbContext.Anchors.Where<Anchors>(a => a.UserName == config.Hunt.UserName)
-                                                                .ToList(),
-                                                                new List<string>{"Mine", "Other"}
-                                                                );
-
-            return View("HuntConfiguration", newConfig);
-        }
-
-        [HttpPost("[action]")]
-        [AllowAnonymous]
-        public void ScriptHuntAnchor(HuntConfiguration config){
-
-            var result = new System.Text.StringBuilder();
-            string scriptToString = "";
-            using (var reader = new System.IO.StreamReader(config.newScript.YarnScript.OpenReadStream()))
+            await HttpContext.Session.LoadAsync();
+            var UserName = HttpContext.Session.GetString(Username);
+            logger.LogError("Hunt name = "+newHunt.HuntName+"User name - "+UserName);
+            Hunts addHunt = new Hunts(newHunt.HuntName, UserName);
+            addHunt.HuntDescription = newHunt.HuntDescription;
+            addHunt.IsPublic = (newHunt.IsPublic == true ? (byte) 1 : (byte) 0);
+            Users user = await dbContext.Users.FirstOrDefaultAsync<Users>(u => u.UserName == UserName);
+            if(user == null)
             {
-                while (reader.Peek() >= 0)
-                {
-                    string newLine = reader.ReadLine();
-                    logger.LogError("New Line: "+newLine);
-                    string tabsAdded = "";
-
-                    result.AppendLine(newLine);
-                    scriptToString = result.ToString();
-                }
+                dbContext.Users.Add(new Users(UserName));
             }
-            HuntAnchors scriptedAnchor = dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(ha => ha.AnchorCreatorId == config.newScript.AnchorCreatorId && ha.AnchorName == config.newScript.AnchorName && ha.HuntName == config.newScript.HuntName && ha.HuntCreatorId == config.newScript.HuntCreatorId);
-            scriptedAnchor.YarnScript = scriptToString;
-            dbContext.HuntAnchors.Update(scriptedAnchor);
-            dbContext.SaveChanges();
 
-            logger.LogError("Show text: "+ dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(ha => ha.AnchorCreatorId == config.newScript.AnchorCreatorId && ha.AnchorName == config.newScript.AnchorName && ha.HuntName == config.newScript.HuntName && ha.HuntCreatorId == config.newScript.HuntCreatorId).YarnScript);
+            dbContext.Hunts.Add(addHunt);
+            dbContext.SaveChanges();
+            HttpContext.Session.SetString(Huntname, newHunt.HuntName);
+
+            return RedirectToAction("ConfigureHunt", "HuntConfiguration");
         }
 
-        [HttpGet("[action]")]
+        [HttpPost("[action]")]
         [AllowAnonymous]
-        public FileContentResult GetAnchorScript(HuntConfiguration config){
+        public async Task<ActionResult> ShowHunt(string huntName)
+        {
+            await HttpContext.Session.LoadAsync();
+            HttpContext.Session.SetString(Huntname, huntName);
 
-            HuntAnchors scriptAnchor = dbContext.HuntAnchors.FirstOrDefault<HuntAnchors>(
-                                                                                            ha => ha.HuntName == config.Hunt.HuntName
-                                                                                            && ha.HuntCreatorId == config.Hunt.UserName
-                                                                                        );
-            string script = scriptAnchor.YarnScript;
-
-            MemoryStream ms = new MemoryStream();
-            TextWriter tw = new StreamWriter(ms);
-
-            tw.WriteAsync(script);
-
-            tw.Flush();
-
-            byte[] bytes = ms.ToArray();
-            ms.Close();
-
-            return File(bytes, "application/force-download", scriptAnchor.AnchorName+"&"+scriptAnchor.AnchorCreatorId+".txt");
+            return RedirectToAction("ConfigureHunt", "HuntConfiguration");
         }
 
     }

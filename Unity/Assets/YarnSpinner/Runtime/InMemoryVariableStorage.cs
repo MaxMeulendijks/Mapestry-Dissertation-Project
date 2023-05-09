@@ -53,8 +53,8 @@ namespace Yarn.Unity {
     public class InMemoryVariableStorage : VariableStorageBehaviour, IEnumerable<KeyValuePair<string, Yarn.Value>>
     {
 
-        /// Where we actually keeping our variables
-        private Dictionary<string, Yarn.Value> variables = new Dictionary<string, Yarn.Value> ();
+        /// Where we actually keeping our variables - I added static so the values would be preserved between scenes.
+        private static Dictionary<string, Yarn.Value> variables = new Dictionary<string, Yarn.Value> ();
 
         /// <summary>
         /// A default value to apply when the object wakes up, or when
